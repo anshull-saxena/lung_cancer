@@ -1,34 +1,15 @@
-# Core ML and Data Science Libraries
-numpy>=1.19.5
-pandas>=1.3.0
-scipy>=1.7.0
-
-# Deep Learning Framework
-tensorflow>=2.8.0,<2.16.0
-keras>=2.8.0
-
-# Traditional Machine Learning
-scikit-learn>=1.0.0
-
-# Genetic Algorithm Framework
-deap>=1.3.1
-
-# Image Processing and Data Handling
-Pillow>=8.0.0
-
-# Jupyter Notebook Environment
-jupyter>=1.0.0
-ipykernel>=6.0.0
-
-# Optional: Progress bars and utilities
-tqdm>=4.62.0
-
-# Optional: Visualization (if you want to add plotting capabilities)
-matplotlib>=3.3.0
-seaborn>=0.11.0
-
-# Optional: Memory profiling and performance monitoring
-psutil>=5.8.0
-
-# System utilities
-setuptools>=50.0.0
+numpy==1.24.4
+pandas
+scipy
+tensorflow==2.15.0
+scikit-learn
+deap
+Pillow
+jupyter
+ipykernel
+kagglehub
+tqdm
+matplotlib
+seaborn
+psutil
+setuptools
