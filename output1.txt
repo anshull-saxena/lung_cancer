@@ -1,0 +1,77 @@
+Individual Classifier Accuracies:
+  KNN: 0.9713
+  SVM: 0.9803
+  RF : 0.9753
+
+=== KNN Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.94      0.96      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.94      0.98      0.96      1000
+
+    accuracy                           0.97      3000
+   macro avg       0.97      0.97      0.97      3000
+weighted avg       0.97      0.97      0.97      3000
+
+
+=== SVM Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.96      0.97      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.96      0.98      0.97      1000
+
+    accuracy                           0.98      3000
+   macro avg       0.98      0.98      0.98      3000
+weighted avg       0.98      0.98      0.98      3000
+
+
+=== Random Forest Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.97      0.96      0.96      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.96      0.97      0.96      1000
+
+    accuracy                           0.98      3000
+   macro avg       0.98      0.98      0.98      3000
+weighted avg       0.98      0.98      0.98      3000
+
+ ///////////////////
+
+Ensemble Accuracy (Majority Voting): 0.9813
+
+Improvement over best individual: 0.0010
+
+=== Ensemble Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.96      0.97      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.96      0.98      0.97      1000
+
+    accuracy                           0.98      3000
+   macro avg       0.98      0.98      0.98      3000
+weighted avg       0.98      0.98      0.98      3000
+
+//////////////////
+
+============================================================
+FINAL RESULTS SUMMARY
+============================================================
+Total samples processed: 15000
+Features selected by GA: 1813 / 3584 (50.6%)
+Test set size: 3000
+
+Classifier Accuracies:
+  KNN:              0.9713
+  SVM:              0.9803
+  Random Forest:    0.9753
+  Ensemble (Fusion): 0.9813 ← BEST
+
+Class Labels:
+  0: lung_aca
+  1: lung_n
+  2: lung_scc
+============================================================
