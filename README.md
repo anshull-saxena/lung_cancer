@@ -1,30 +1,35 @@
-# Lung Histopathology Classification System
 
-A comprehensive deep learning and machine learning pipeline for classifying lung histopathology images into three categories: **Adenocarcinoma (ACA)**, **Normal (N)**, and **Squamous Cell Carcinoma (SCC)**.
+# Aggregation Operators in Neural Networks: Multi-Backbone Attention and Ensemble Methods for Lung Histopathology
+
+
+A comprehensive deep learning and machine learning pipeline for classifying lung histopathology images into three categories: **Adenocarcinoma (ACA)**, **Normal (N)**, and **Squamous Cell Carcinoma (SCC)**. Developed as part of academic research at BITS Pilani, Hyderabad Campus under the supervision of Prof. Swati Hait.
 
 ## 🚀 Overview
+
 
 This project implements an advanced ensemble classification system that combines:
 
 - **Multiple CNN Backbones**: DenseNet121, ResNet50, VGG16, EfficientNetB0, and InceptionV3
-- **Advanced Attention Mechanisms**: Single-head and Multi-head Channel Attention (SE blocks)
+- **Attention Mechanisms**: Squeeze-and-Excitation (SE) blocks and Multi-Head Channel Attention
 - **Genetic Algorithm**: Automated feature selection using DEAP
 - **Ensemble Learning**: KNN, SVM, and Random Forest classifiers
 - **Majority Voting Fusion**: Final prediction aggregation
 
+
 ### 🎯 Performance Results
 
-The system achieves state-of-the-art performance on lung histopathology classification:
+The system achieves competitive performance on lung histopathology classification:
 
 - **Single-head CNN**: 98.13% ensemble accuracy
 - **Multi-head CNN**: 98.70% ensemble accuracy
-- **Individual Classifiers**: 97-98% accuracy across KNN, SVM, and Random Forest
+- **Individual Classifiers**: 97–98% accuracy across KNN, SVM, and Random Forest
 - **Dataset**: 15,000 images (5,000 per class) with balanced distribution
 
 ## 📋 Features
 
-- **Multi-Architecture Feature Extraction**: Leverages three pre-trained CNN models for robust feature representation
-- **Attention Mechanism**: SE blocks enhance feature quality by focusing on important channels
+
+- **Multi-Architecture Feature Extraction**: Leverages five pre-trained CNN models for robust feature representation
+- **Attention Mechanisms**: SE blocks and multi-head channel attention enhance feature quality by focusing on important channels
 - **Automated Feature Selection**: Genetic Algorithm optimizes feature subset selection
 - **Ensemble Classification**: Combines multiple traditional ML algorithms for improved accuracy
 - **Reproducible Results**: Fixed random seeds ensure consistent outcomes
@@ -104,15 +109,17 @@ Key parameters that can be adjusted in the notebook:
 
 This project includes multiple notebook variants for different experimental approaches:
 
+
 ### 1. `code.ipynb` - Single-Head Attention Implementation
 - **Architecture**: 3 CNN backbones (DenseNet121, ResNet50, VGG16)
 - **Attention**: Single-head Squeeze-and-Excitation blocks
 - **Performance**: 98.13% ensemble accuracy
 - **Output**: `output1.txt`
 
+
 ### 2. `code_multihead.ipynb` - Multi-Head Attention Implementation (Current)
 - **Architecture**: 5 CNN backbones (DenseNet121, ResNet50, VGG16, EfficientNetB0, InceptionV3)
-- **Attention**: Multi-head Channel Attention mechanism (4 heads)
+- **Attention**: Multi-head Channel Attention mechanism (8 heads)
 - **Performance**: 98.70% ensemble accuracy
 - **Output**: `output_multi.txt`
 - **Features**: GPU-optimized implementation with advanced attention
@@ -329,7 +336,8 @@ This project is provided as-is for educational and research purposes. Please ens
 
 ## 🎓 Research Context
 
-This project was developed as part of academic research at BITS Pilani, focusing on advanced deep learning techniques for medical image analysis. The implementation demonstrates:
+
+This project was developed as part of academic research at BITS Pilani, Hyderabad Campus, under the supervision of Prof. Swati Hait, focusing on advanced deep learning techniques for medical image analysis. The implementation demonstrates:
 
 - **Multi-head attention mechanisms** for improved feature representation
 - **Ensemble learning** for robust classification performance
