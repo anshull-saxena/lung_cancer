@@ -1,7 +1,7 @@
-numpy==1.24.4
+numpy==1.26.4
 pandas
 scipy
-tensorflow==2.15.0
+tensorflow==2.16.1
 scikit-learn
 deap
 Pillow
