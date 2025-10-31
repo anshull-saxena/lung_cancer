@@ -1,0 +1,109 @@
+
+============================================================
+Individual Classifier Accuracies:
+  KNN: 0.9930
+  SVM: 0.9843
+  RF : 0.9717
+  LR : 0.9817
+  XGB: 0.9893
+
+=== KNN Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       1.00      0.98      0.99      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.98      1.00      0.99      1000
+
+    accuracy                           0.99      3000
+   macro avg       0.99      0.99      0.99      3000
+weighted avg       0.99      0.99      0.99      3000
+
+
+=== SVM Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.97      0.98      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.97      0.98      0.98      1000
+
+    accuracy                           0.98      3000
+   macro avg       0.98      0.98      0.98      3000
+weighted avg       0.98      0.98      0.98      3000
+
+
+=== Random Forest Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.96      0.95      0.96      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.96      0.96      0.96      1000
+
+    accuracy                           0.97      3000
+   macro avg       0.97      0.97      0.97      3000
+weighted avg       0.97      0.97      0.97      3000
+
+
+=== Logistic Regression Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.97      0.97      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.97      0.98      0.97      1000
+
+    accuracy                           0.98      3000
+   macro avg       0.98      0.98      0.98      3000
+weighted avg       0.98      0.98      0.98      3000
+
+
+=== XGBoost Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.98      0.98      0.98      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.98      0.98      0.98      1000
+
+    accuracy                           0.99      3000
+   macro avg       0.99      0.99      0.99      3000
+weighted avg       0.99      0.99      0.99      3000
+
+
+////////////////////////////////////////////////////////////
+
+Ensemble Accuracy (Weighted Probability): 0.9920
+
+Improvement over best individual: -0.0010
+
+=== Ensemble Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       0.99      0.99      0.99      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       0.99      0.99      0.99      1000
+
+    accuracy                           0.99      3000
+   macro avg       0.99      0.99      0.99      3000
+weighted avg       0.99      0.99      0.99      3000
+
+
+////////////////////////////////////////////////////////////
+
+============================================================
+FINAL RESULTS SUMMARY
+============================================================
+Total samples processed: 15000
+Features selected by AGWO: 575 / 6400 (9.0%)
+Test set size: 3000
+
+Classifier Accuracies:
+  KNN:              0.9930
+  SVM:              0.9843
+  Random Forest:    0.9717
+  Logistic Reg:     0.9817
+  XGBoost:          0.9893
+  Ensemble (Fusion): 0.9920 ← BEST
+
+Class Labels:
+  0: lung_aca
+  1: lung_n
+  2: lung_scc
+============================================================

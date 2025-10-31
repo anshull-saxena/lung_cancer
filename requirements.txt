@@ -1,8 +1,11 @@
 numpy==1.26.4
 pandas
 scipy
-# Install CUDA-enabled TensorFlow for GPU (T4) support on Python 3.11
-tensorflow[and-cuda]==2.16.1
+# Linux (NVIDIA CUDA): install CUDA-enabled TensorFlow
+tensorflow[and-cuda]==2.16.1; platform_system == "Linux"
+# macOS (Apple Silicon): install Apple builds with Metal acceleration
+tensorflow-macos==2.16.1; platform_system == "Darwin"
+tensorflow-metal==1.1.0; platform_system == "Darwin"
 scikit-learn
 deap
 Pillow
@@ -14,5 +17,5 @@ matplotlib
 seaborn
 psutil
 setuptools
-# Needed because the notebook trains XGBoost
+# XGBoost (CPU on macOS; GPU optional on Linux)
 xgboost
