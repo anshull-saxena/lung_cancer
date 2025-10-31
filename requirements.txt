@@ -1,7 +1,8 @@
 numpy==1.26.4
 pandas
 scipy
-tensorflow==2.16.1
+# Install CUDA-enabled TensorFlow for GPU (T4) support on Python 3.11
+tensorflow[and-cuda]==2.16.1
 scikit-learn
 deap
 Pillow
@@ -13,3 +14,5 @@ matplotlib
 seaborn
 psutil
 setuptools
+# Needed because the notebook trains XGBoost
+xgboost
