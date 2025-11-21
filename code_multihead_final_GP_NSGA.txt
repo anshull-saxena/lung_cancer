@@ -1,0 +1,94 @@
+============================================================
+Individual Classifier Accuracies:
+  KNN: 0.9970
+  SVM: 0.9943
+  RF : 0.9720
+  LR : 0.9720
+  XGB: 0.9813
+
+////////////////////////////////////////////////////////////
+
+Ensemble Accuracy (GP Fusion): 0.9977
+
+Improvement over best individual: +0.0007
+
+=== Ensemble Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       1.00      1.00      1.00      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       1.00      0.99      1.00      1000
+
+    accuracy                           1.00      3000
+   macro avg       1.00      1.00      1.00      3000
+weighted avg       1.00      1.00      1.00      3000
+
+
+////////////////////////////////////////////////////////////
+
+============================================================
+FINAL RESULTS SUMMARY
+============================================================
+Total samples processed: 15000
+Features selected by NSGA-II: 169 / 6400 (2.6%)
+Test set size: 3000
+
+Classifier Accuracies:
+  KNN:              0.9970
+  SVM:              0.9943
+  Random Forest:    0.9720
+  Logistic Reg:     0.9720
+  XGBoost:          0.9813
+  Ensemble (Fusion): 0.9977 ← BEST
+
+Class Labels:
+  0: lung_aca
+  1: lung_n
+  2: lung_scc
+============================================================
+Individual Classifier Accuracies:
+  KNN: 0.9970
+  SVM: 0.9943
+  RF : 0.9720
+  LR : 0.9720
+  XGB: 0.9813
+
+////////////////////////////////////////////////////////////
+
+Ensemble Accuracy (GP Fusion): 0.9977
+
+Improvement over best individual: +0.0007
+
+=== Ensemble Classification Report ===
+              precision    recall  f1-score   support
+
+    lung_aca       1.00      1.00      1.00      1000
+      lung_n       1.00      1.00      1.00      1000
+    lung_scc       1.00      0.99      1.00      1000
+
+    accuracy                           1.00      3000
+   macro avg       1.00      1.00      1.00      3000
+weighted avg       1.00      1.00      1.00      3000
+
+
+////////////////////////////////////////////////////////////
+
+============================================================
+FINAL RESULTS SUMMARY
+============================================================
+Total samples processed: 15000
+Features selected by NSGA-II: 169 / 6400 (2.6%)
+Test set size: 3000
+
+Classifier Accuracies:
+  KNN:              0.9970
+  SVM:              0.9943
+  Random Forest:    0.9720
+  Logistic Reg:     0.9720
+  XGBoost:          0.9813
+  Ensemble (Fusion): 0.9977 ← BEST
+
+Class Labels:
+  0: lung_aca
+  1: lung_n
+  2: lung_scc

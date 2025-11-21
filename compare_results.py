@@ -12,12 +12,18 @@ def parse_results(file_path):
     # New patterns for Logistic Regression and XGBoost/XGB
     logistic_pattern = re.compile(r"Logistic(?:\s+Reg)?:\s*([0-9.]+)", re.IGNORECASE)
     xgb_pattern = re.compile(r"(?:XGBoost|XGB):\s*([0-9.]+)", re.IGNORECASE)
+    
+    # Pattern for Extra Info and Summary
+    extra_info_pattern = re.compile(r"Extra Info:\s*(.*)", re.IGNORECASE)
+    summary_pattern = re.compile(r"Summary:\s*(.*)", re.IGNORECASE)
 
     acc_match = acc_pattern.search(content)
     ensemble_match = ensemble_pattern.search(content)
     features_match = features_pattern.search(content)
     logistic_match = logistic_pattern.search(content)
     xgb_match = xgb_pattern.search(content)
+    extra_info_match = extra_info_pattern.search(content)
+    summary_match = summary_pattern.search(content)
 
     results = {}
     if acc_match:
@@ -34,6 +40,10 @@ def parse_results(file_path):
         results['GA_selected'] = int(features_match.group(1))
         results['GA_total'] = int(features_match.group(2))
         results['GA_percent'] = float(features_match.group(3))
+    if extra_info_match:
+        results['Extra_Info'] = extra_info_match.group(1).strip()
+    if summary_match:
+        results['Summary'] = summary_match.group(1).strip()
     return results
 
 def _ensure_package(pkg):
@@ -146,7 +156,9 @@ def compare_files(file_paths):
             'Logistic': f"{res.get('Logistic'):.4f}" if 'Logistic' in res else '-',
             'XGBoost': f"{res.get('XGBoost'):.4f}" if 'XGBoost' in res else '-',
             'Ensemble': f"{res.get('Ensemble'):.4f}" if 'Ensemble' in res else '-',
-            'GA_Selected(%)': f"{res.get('GA_selected', '-')}/{res.get('GA_total', '-')} ({res.get('GA_percent', '-')})" if 'GA_selected' in res else '-'
+            'GA_Selected(%)': f"{res.get('GA_selected', '-')}/{res.get('GA_total', '-')} ({res.get('GA_percent', '-')})" if 'GA_selected' in res else '-',
+            'Extra Info': res.get('Extra_Info', '-'),
+            'Summary': res.get('Summary', '-')
         })
 
     print("\nComparison of Results:")
