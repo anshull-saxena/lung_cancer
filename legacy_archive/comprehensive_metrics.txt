@@ -1,0 +1,39 @@
+
+COMPREHENSIVE PERFORMANCE METRICS
+============================================================
+
+Confusion Matrix:
+
+[1000    0    0]
+[   0 1000    0]
+[  5   5 990]
+
+Overall Metrics:
+- Accuracy:  0.9967
+- MCC:       0.9950
+
+Per-Class Performance:
+
+lung_aca:
+  Precision:   0.9950
+  Recall:      1.0000
+  Specificity: 0.9975
+  F1-Score:    0.9975
+lung_n:
+  Precision:   0.9950
+  Recall:      1.0000
+  Specificity: 0.9975
+  F1-Score:    0.9975
+lung_scc:
+  Precision:   1.0000
+  Recall:      0.9900
+  Specificity: 1.0000
+  F1-Score:    0.9950
+
+Average Performance:
+- Mean Precision:   0.9967
+- Mean Recall:      0.9967
+- Mean Specificity: 0.9983
+- Mean F1-Score:    0.9967
+
+============================================================
