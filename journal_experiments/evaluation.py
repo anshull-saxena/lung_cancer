@@ -11,6 +11,20 @@ from sklearn.metrics import (accuracy_score, precision_score, recall_score,
 from config import RESULTS_DIR, CLASS_NAMES
 
 
+def _compute_specificity(y_true, y_pred, num_classes=None):
+    """Compute per-class specificity from confusion matrix."""
+    if num_classes is None:
+        num_classes = len(np.unique(y_true))
+    cm = confusion_matrix(y_true, y_pred, labels=list(range(num_classes)))
+    spec = []
+    for i in range(num_classes):
+        tn = cm.sum() - (cm[i, :].sum() + cm[:, i].sum() - cm[i, i])
+        fp = cm[:, i].sum() - cm[i, i]
+        specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+        spec.append(specificity)
+    return spec
+
+
 def compute_metrics(y_true, y_pred, class_names=CLASS_NAMES):
     """
     Compute comprehensive classification metrics.
@@ -18,13 +32,11 @@ def compute_metrics(y_true, y_pred, class_names=CLASS_NAMES):
     Returns:
         dict with accuracy, precision, recall, f1, specificity (macro + per-class)
     """
-    from classifiers import compute_specificity
-
     acc = accuracy_score(y_true, y_pred)
     prec = precision_score(y_true, y_pred, average="macro", zero_division=0)
     rec = recall_score(y_true, y_pred, average="macro", zero_division=0)
     f1 = f1_score(y_true, y_pred, average="macro", zero_division=0)
-    spec_per = compute_specificity(y_true, y_pred)
+    spec_per = _compute_specificity(y_true, y_pred)
     spec = np.mean(spec_per)
 
     prec_per = precision_score(y_true, y_pred, average=None, zero_division=0)

@@ -7,8 +7,10 @@ import numpy as np
 from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 
-import sys, os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import os
+_parent = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _parent not in __import__('sys').path:
+    __import__('sys').path.insert(0, _parent)
 from config import (NSGA_POP, NSGA_GEN, CX_PROB, MUT_PROB, INDPB,
                      CV_FOLDS, KNN_K, KNN_WEIGHTS, SEED)
 

@@ -46,7 +46,7 @@ def build_feature_extractor(backbone_name="densenet121", attention_type="se",
         raise ValueError(f"Unknown backbone '{backbone_name}'. "
                          f"Choose from {list(BACKBONE_REGISTRY.keys())}")
 
-    backbone_cls, preprocess_fn, feature_dim = BACKBONE_REGISTRY[backbone_name]
+    backbone_cls, preprocess_fn, _nominal_dim = BACKBONE_REGISTRY[backbone_name]
 
     inp = layers.Input(shape=(*img_size, 3), name="input_image")
     x = layers.Lambda(preprocess_fn, name=f"preprocess_{backbone_name}")(inp)
@@ -64,6 +64,8 @@ def build_feature_extractor(backbone_name="densenet121", attention_type="se",
     out = layers.GlobalAveragePooling2D(name="gap_final")(feat_map)
 
     model = Model(inp, out, name=f"{backbone_name}_{attention_type}")
+    # Derive actual feature dim from the built model
+    feature_dim = int(model.output_shape[-1])
     return model, feature_dim
 
 
