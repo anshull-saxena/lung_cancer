@@ -5,16 +5,23 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
                              f1_score, confusion_matrix, classification_report)
 from scipy.stats import mode as scipy_mode
 
+try:
+    from xgboost import XGBClassifier
+    _HAS_XGB = True
+except ImportError:
+    _HAS_XGB = False
+
 from config import (KNN_K, KNN_WEIGHTS, SVM_KERNEL, SVM_C, SVM_GAMMA,
-                     RF_N_ESTIMATORS, SEED, CLASS_NAMES)
+                     RF_N_ESTIMATORS, SEED, CLASS_NAMES, NUM_CLASSES)
 
 
 def get_classifiers():
-    """Return a dict of configured classifiers."""
+    """Return a dict of the original 3 classifiers (for backward compat)."""
     return {
         "KNN": KNeighborsClassifier(
             n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1
@@ -27,6 +34,35 @@ def get_classifiers():
             n_estimators=RF_N_ESTIMATORS, random_state=SEED, n_jobs=-1
         ),
     }
+
+
+def get_all_classifiers():
+    """Return all 5 classifiers: KNN, SVM, RF, LR, XGBoost."""
+    clfs = {
+        "KNN": KNeighborsClassifier(
+            n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1
+        ),
+        "SVM": SVC(
+            kernel=SVM_KERNEL, C=SVM_C, gamma=SVM_GAMMA,
+            probability=True, random_state=SEED
+        ),
+        "RF": RandomForestClassifier(
+            n_estimators=RF_N_ESTIMATORS, random_state=SEED, n_jobs=-1
+        ),
+        "LR": LogisticRegression(
+            max_iter=1000, random_state=SEED, n_jobs=-1
+        ),
+    }
+    if _HAS_XGB:
+        clfs["XGBoost"] = XGBClassifier(
+            n_estimators=300, max_depth=6, learning_rate=0.1,
+            use_label_encoder=False, eval_metric="mlogloss",
+            random_state=SEED, n_jobs=-1
+        )
+    else:
+        import warnings
+        warnings.warn("xgboost not installed; XGBoost classifier unavailable.")
+    return clfs
 
 
 def compute_specificity(y_true, y_pred, num_classes=None):

@@ -30,18 +30,22 @@ TABLE_MAP = {
     12: "experiments.table11_14_ablation",  # same module
     13: "experiments.table11_14_ablation",
     14: "experiments.table11_14_ablation",
+    15: "experiments.table15_ensemble_comparison",
+    16: "experiments.table16_full_pipeline",
 }
 
 # Execution order (module name → display label)
 ORDERED_MODULES = [
-    ("experiments.table2_3_base",       "Tables 2 & 3"),
-    ("experiments.table6_nsga2",        "Table 6"),
-    ("experiments.table4_crossval",     "Table 4"),
-    ("experiments.table5_attention",    "Table 5"),
-    ("experiments.table7_grouping",     "Table 7"),
-    ("experiments.table8_9_combined",   "Tables 8 & 9"),
-    ("experiments.table10_nsga2_full",  "Table 10"),
-    ("experiments.table11_14_ablation", "Tables 11-14"),
+    ("experiments.table2_3_base",                "Tables 2 & 3"),
+    ("experiments.table6_nsga2",                 "Table 6"),
+    ("experiments.table4_crossval",              "Table 4"),
+    ("experiments.table5_attention",             "Table 5"),
+    ("experiments.table7_grouping",              "Table 7"),
+    ("experiments.table8_9_combined",            "Tables 8 & 9"),
+    ("experiments.table10_nsga2_full",           "Table 10"),
+    ("experiments.table11_14_ablation",          "Tables 11-14"),
+    ("experiments.table15_ensemble_comparison",  "Table 15 (Ensemble Comparison)"),
+    ("experiments.table16_full_pipeline",        "Table 16 (Full Pipeline)"),
 ]
 
 
