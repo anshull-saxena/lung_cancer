@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Comparison of ensemble fusion strategies with 5 classifiers (DenseNet121 + SE + Adaptive GA)}
+\label{tab:table15}
+\begin{tabular}{lccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & Specificity \\
+\midrule
+Majority Vote & 0.9917 & 0.9917 & 0.9917 & 0.9917 & 0.9958 \\
+Weighted Fusion & 0.9947 & 0.9947 & 0.9947 & 0.9947 & 0.9973 \\
+GP1 (Max) & 0.9967 & 0.9967 & 0.9967 & 0.9967 & 0.9983 \\
+GP2 (Product) & 0.9953 & 0.9953 & 0.9953 & 0.9953 & 0.9977 \\
+GP3 (Ratio) & 0.0000 & 0.0000 & 0.0000 & 0.0000 & 0.5000 \\
+GP4 (Weighted Sum) & 0.9953 & 0.9953 & 0.9953 & 0.9953 & 0.9977 \\
+\bottomrule
+\end{tabular}
+\end{table}

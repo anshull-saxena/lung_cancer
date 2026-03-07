@@ -1,0 +1,271 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\title{Adaptive GA Deep Feature Selector -- Journal Experiments}
+\maketitle
+
+% --- table_10.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive comparison of feature selection methods: Baseline GA, Adaptive GA, and NSGA-II}
+\label{tab:table10}
+\begin{tabular}{lccccc}
+\toprule
+Method & Accuracy & F1-Score & \# Features & Reduction \% & Time (s) \\
+\midrule
+Baseline GA & 0.9973 & 0.9973 & 506 & 50.6% & 1958.3000 \\
+Adaptive GA & 0.9970 & 0.9970 & 510 & 50.2% & 1186.6000 \\
+NSGA-II & 0.9970 & 0.9970 & 310 & 69.7% & 4508.3000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_11.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Effect of GA population size on classification performance}
+\label{tab:table11}
+\begin{tabular}{lccccc}
+\toprule
+Pop. Size & Accuracy & Precision & Recall & F1-Score & \# Features \\
+\midrule
+20 & 0.9987 & 0.9987 & 0.9987 & 0.9987 & 517 \\
+40 & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 510 \\
+60 & 0.9983 & 0.9983 & 0.9983 & 0.9983 & 543 \\
+80 & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 479 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_12.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Effect of number of GA generations on classification performance}
+\label{tab:table12}
+\begin{tabular}{lccccc}
+\toprule
+Generations & Accuracy & Precision & Recall & F1-Score & \# Features \\
+\midrule
+10 & 0.9977 & 0.9977 & 0.9977 & 0.9977 & 509 \\
+25 & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 512 \\
+50 & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 510 \\
+100 & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 510 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_13.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Effect of KNN k value on classification performance}
+\label{tab:table13}
+\begin{tabular}{lccccc}
+\toprule
+k & Accuracy & Precision & Recall & F1-Score & Specificity \\
+\midrule
+3 & 0.9960 & 0.9960 & 0.9960 & 0.9960 & 0.9980 \\
+5 & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 \\
+7 & 0.9977 & 0.9977 & 0.9977 & 0.9977 & 0.9988 \\
+9 & 0.9960 & 0.9960 & 0.9960 & 0.9960 & 0.9980 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_14.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison of CNN backbones with SE attention + Adaptive GA + KNN}
+\label{tab:table14}
+\begin{tabular}{lccccc}
+\toprule
+Backbone & Feat. Dim & Accuracy & F1-Score & Selected & Params \\
+\midrule
+densenet121 & 1024 & 0.9970 & 0.9970 & 510 & 7169664 \\
+resnet50 & 2048 & 0.9960 & 0.9960 & 968 & 24114176 \\
+vgg16 & 512 & 0.9677 & 0.9676 & 262 & 14748000 \\
+efficientnetb0 & 1280 & 0.9990 & 0.9990 & 650 & 4255731 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_15.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison of ensemble fusion strategies with 5 classifiers (DenseNet121 + SE + Adaptive GA)}
+\label{tab:table15}
+\begin{tabular}{lccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & Specificity \\
+\midrule
+Majority Vote & 0.9917 & 0.9917 & 0.9917 & 0.9917 & 0.9958 \\
+Weighted Fusion & 0.9947 & 0.9947 & 0.9947 & 0.9947 & 0.9973 \\
+GP1 (Max) & 0.9967 & 0.9967 & 0.9967 & 0.9967 & 0.9983 \\
+GP2 (Product) & 0.9953 & 0.9953 & 0.9953 & 0.9953 & 0.9977 \\
+GP3 (Ratio) & 0.0000 & 0.0000 & 0.0000 & 0.0000 & 0.5000 \\
+GP4 (Weighted Sum) & 0.9953 & 0.9953 & 0.9953 & 0.9953 & 0.9977 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_15_individual.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Individual classifier performance with 5 classifiers (DenseNet121 + SE + Adaptive GA)}
+\label{tab:table15_ind}
+\begin{tabular}{lccccc}
+\toprule
+Classifier & Accuracy & Precision & Recall & F1-Score & Specificity \\
+\midrule
+KNN & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 \\
+SVM & 0.9757 & 0.9757 & 0.9757 & 0.9757 & 0.9878 \\
+RF & 0.9867 & 0.9867 & 0.9867 & 0.9867 & 0.9933 \\
+LR & 0.9700 & 0.9700 & 0.9700 & 0.9700 & 0.9850 \\
+XGBoost & 0.9930 & 0.9930 & 0.9930 & 0.9930 & 0.9965 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_2.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Performance comparison of classifiers with DenseNet121 + SE attention + Adaptive GA feature selection}
+\label{tab:table2}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & Specificity & \# Features \\
+\midrule
+KNN & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 510 \\
+SVM & 0.9757 & 0.9757 & 0.9757 & 0.9757 & 0.9878 & 510 \\
+RF & 0.9867 & 0.9867 & 0.9867 & 0.9867 & 0.9933 & 510 \\
+Ensemble (MV) & 0.9917 & 0.9917 & 0.9917 & 0.9917 & 0.9958 & 510 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_3.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison with state-of-the-art methods on LC25000 lung dataset}
+\label{tab:table3}
+\begin{tabular}{lccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & Specificity \\
+\midrule
+Masud et al. (2021) & 0.9633 & 0.9650 & 0.9633 & 0.9633 & 0.9817 \\
+Mangal et al. (2020) & 0.9700 & 0.9700 & 0.9700 & 0.9700 & 0.9850 \\
+Hatuwal & Thapa (2020) & 0.9706 & 0.9710 & 0.9706 & 0.9706 & 0.9853 \\
+Nishio et al. (2021) & 0.9500 & 0.9530 & 0.9500 & 0.9500 & 0.9750 \\
+Mehmood et al. (2022) & 0.9773 & 0.9780 & 0.9773 & 0.9773 & 0.9887 \\
+Talukder et al. (2022) & 0.9810 & 0.9810 & 0.9810 & 0.9810 & 0.9905 \\
+Ours (KNN) & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_4.tex ---
+\begin{table}[htbp]
+\centering
+\caption{10-fold cross-validation results with DenseNet121 + SE + Adaptive GA + KNN}
+\label{tab:table4}
+\begin{tabular}{lcccccc}
+\toprule
+Fold & Accuracy & Precision & Recall & F1-Score & Specificity & \# Features \\
+\midrule
+1 & 0.9960 & 0.9960 & 0.9960 & 0.9960 & 0.9980 & 519 \\
+2 & 0.9993 & 0.9993 & 0.9993 & 0.9993 & 0.9997 & 521 \\
+3 & 0.9987 & 0.9987 & 0.9987 & 0.9987 & 0.9993 & 471 \\
+4 & 0.9987 & 0.9987 & 0.9987 & 0.9987 & 0.9993 & 499 \\
+5 & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 503 \\
+6 & 0.9967 & 0.9967 & 0.9967 & 0.9967 & 0.9983 & 514 \\
+7 & 0.9980 & 0.9980 & 0.9980 & 0.9980 & 0.9990 & 538 \\
+8 & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 502 \\
+9 & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 518 \\
+10 & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 511 \\
+Mean & 0.9977 & 0.9977 & 0.9977 & 0.9977 & 0.9988 & 509.6000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_5.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison of attention mechanisms with DenseNet121 backbone + Adaptive GA + KNN}
+\label{tab:table5}
+\begin{tabular}{lccccccc}
+\toprule
+Attention & Accuracy & Precision & Recall & F1-Score & Specificity & \# Features & Attn. Params \\
+\midrule
+SE & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 510 & 132160 \\
+ECA & 0.9967 & 0.9967 & 0.9967 & 0.9967 & 0.9983 & 494 & 3 \\
+CBAM & 0.9367 & 0.9364 & 0.9367 & 0.9362 & 0.9683 & 538 & 132259 \\
+SPLIT & 0.9907 & 0.9907 & 0.9907 & 0.9907 & 0.9953 & 519 & 83008 \\
+DUAL & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 504 & 1185856 \\
+VIT & 0.9983 & 0.9983 & 0.9983 & 0.9983 & 0.9992 & 516 & 4200448 \\
+SWIN & 0.9983 & 0.9983 & 0.9983 & 0.9983 & 0.9992 & 516 & 4200448 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_6.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison of Adaptive GA and NSGA-II feature selection on DenseNet121 + SE features}
+\label{tab:table6}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & Specificity & \# Features \\
+\midrule
+Adaptive GA & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 510 \\
+NSGA-II & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 310 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_7.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Effect of grouping operator on Adaptive GA feature selection}
+\label{tab:table7}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & \# Features & Reduction \% \\
+\midrule
+Adaptive GA (no grouping) & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 510 & 49.8% \\
+Adaptive GA (with grouping) & 0.9977 & 0.9977 & 0.9977 & 0.9977 & 522 & 51.0% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_8.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Comparison of Baseline GA, Adaptive GA, and Adaptive GA with grouping operator}
+\label{tab:table8}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & \# Features & Reduction \\
+\midrule
+Baseline GA & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 506 & 49.4% \\
+Adaptive GA & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 510 & 49.8% \\
+Adaptive GA + Grouping & 0.9977 & 0.9977 & 0.9977 & 0.9977 & 522 & 51.0% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% --- table_9.tex ---
+\begin{table}[htbp]
+\centering
+\caption{Effect of grouping operator on NSGA-II feature selection}
+\label{tab:table9}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Accuracy & Precision & Recall & F1-Score & \# Features & Reduction \\
+\midrule
+NSGA-II & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 310 & 30.3% \\
+NSGA-II + Grouping & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 310 & 30.3% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

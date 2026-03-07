@@ -1,0 +1,8 @@
+method,accuracy,precision,recall,f1,specificity,notes
+Masud et al. (2021),0.9633,0.965,0.9633,0.9633,0.9817,CNN+ML
+Mangal et al. (2020),0.97,0.97,0.97,0.97,0.985,CovidNet
+Hatuwal & Thapa (2020),0.9706,0.971,0.9706,0.9706,0.9853,CNN
+Nishio et al. (2021),0.95,0.953,0.95,0.95,0.975,Homology
+Mehmood et al. (2022),0.9773,0.978,0.9773,0.9773,0.9887,SBCNet
+Talukder et al. (2022),0.981,0.981,0.981,0.981,0.9905,ML+DL
+Ours (KNN),0.997,0.9970019920119721,0.997,0.9970004982511237,0.9984999999999999,DenseNet121+SE+AdaptGA

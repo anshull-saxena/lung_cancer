@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\caption{Comparison of attention mechanisms with DenseNet121 backbone + Adaptive GA + KNN}
+\label{tab:table5}
+\begin{tabular}{lccccccc}
+\toprule
+Attention & Accuracy & Precision & Recall & F1-Score & Specificity & \# Features & Attn. Params \\
+\midrule
+SE & 0.9970 & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 510 & 132160 \\
+ECA & 0.9967 & 0.9967 & 0.9967 & 0.9967 & 0.9983 & 494 & 3 \\
+CBAM & 0.9367 & 0.9364 & 0.9367 & 0.9362 & 0.9683 & 538 & 132259 \\
+SPLIT & 0.9907 & 0.9907 & 0.9907 & 0.9907 & 0.9953 & 519 & 83008 \\
+DUAL & 0.9973 & 0.9973 & 0.9973 & 0.9973 & 0.9987 & 504 & 1185856 \\
+VIT & 0.9983 & 0.9983 & 0.9983 & 0.9983 & 0.9992 & 516 & 4200448 \\
+SWIN & 0.9983 & 0.9983 & 0.9983 & 0.9983 & 0.9992 & 516 & 4200448 \\
+\bottomrule
+\end{tabular}
+\end{table}

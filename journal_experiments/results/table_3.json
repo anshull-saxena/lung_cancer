@@ -1,0 +1,65 @@
+[
+  {
+    "method": "Masud et al. (2021)",
+    "accuracy": 0.9633,
+    "precision": 0.965,
+    "recall": 0.9633,
+    "f1": 0.9633,
+    "specificity": 0.9817,
+    "notes": "CNN+ML"
+  },
+  {
+    "method": "Mangal et al. (2020)",
+    "accuracy": 0.97,
+    "precision": 0.97,
+    "recall": 0.97,
+    "f1": 0.97,
+    "specificity": 0.985,
+    "notes": "CovidNet"
+  },
+  {
+    "method": "Hatuwal & Thapa (2020)",
+    "accuracy": 0.9706,
+    "precision": 0.971,
+    "recall": 0.9706,
+    "f1": 0.9706,
+    "specificity": 0.9853,
+    "notes": "CNN"
+  },
+  {
+    "method": "Nishio et al. (2021)",
+    "accuracy": 0.95,
+    "precision": 0.953,
+    "recall": 0.95,
+    "f1": 0.95,
+    "specificity": 0.975,
+    "notes": "Homology"
+  },
+  {
+    "method": "Mehmood et al. (2022)",
+    "accuracy": 0.9773,
+    "precision": 0.978,
+    "recall": 0.9773,
+    "f1": 0.9773,
+    "specificity": 0.9887,
+    "notes": "SBCNet"
+  },
+  {
+    "method": "Talukder et al. (2022)",
+    "accuracy": 0.981,
+    "precision": 0.981,
+    "recall": 0.981,
+    "f1": 0.981,
+    "specificity": 0.9905,
+    "notes": "ML+DL"
+  },
+  {
+    "method": "Ours (KNN)",
+    "accuracy": 0.997,
+    "precision": 0.9970019920119721,
+    "recall": 0.997,
+    "f1": 0.9970004982511237,
+    "specificity": 0.9984999999999999,
+    "notes": "DenseNet121+SE+AdaptGA"
+  }
+]
