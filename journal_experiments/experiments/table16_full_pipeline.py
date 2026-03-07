@@ -94,9 +94,10 @@ def run():
     print(f"  Group boundaries: {group_boundaries}")
 
     # 4. NSGA-II feature selection with grouping
+    # Use reduced pop/gen for large concatenated feature space to fit in 24GB RAM
     print("\n[4] Running NSGA-II with grouping operator ...")
     t0 = time.time()
-    nsga = NSGA2Selector(n_features=total_features)
+    nsga = NSGA2Selector(n_features=total_features, pop_size=30, n_gen=40)
     nsga.set_groups(group_boundaries)
     sel_idx, pareto_front, nsga_history = nsga.run(F_concat_trainval, y_train_val)
     nsga_time = time.time() - t0
@@ -154,9 +155,10 @@ def run():
                 "Table 16b: Ensemble Comparison (Full Pipeline)")
 
     # 8. Also run Adaptive GA for comparison
+    # Reduced pop/gen for large feature space to fit in 24GB RAM
     print("\n[7] Running Adaptive GA with grouping (for comparison) ...")
     t0 = time.time()
-    aga = AdaptiveGA(n_features=total_features)
+    aga = AdaptiveGA(n_features=total_features, pop_size=30, n_gen=30)
     aga.set_groups(group_boundaries)
     aga_sel_idx, aga_history = aga.run(F_concat_trainval, y_train_val)
     aga_time = time.time() - t0

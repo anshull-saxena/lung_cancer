@@ -60,9 +60,11 @@ class NSGA2Selector:
         if len(idx) < 2:
             return (0.0, self.n_features)
         Xs = X[:, idx]
+        # Use n_jobs=1 for large feature spaces to reduce memory usage
+        n_jobs = 1 if self.n_features > 3000 else -1
         scores = cross_val_score(
             self.classifier, Xs, y, cv=self.cv_folds,
-            scoring="accuracy", n_jobs=-1
+            scoring="accuracy", n_jobs=n_jobs
         )
         return (float(scores.mean()), len(idx))
 
