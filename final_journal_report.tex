@@ -16,6 +16,8 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cite}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \geometry{margin=1in}
@@ -23,7 +25,9 @@
 % -----------------------------
 % Title
 % -----------------------------
-\title{A Grouping-Based Ensemble Method with NSGA-II}
+\title{A Grouping-Based Ensemble Method with NSGA-II for Lung Histopathology Classification}
+\author{Anshul \and Prof.\ Swati Hait\\
+\textit{BITS Pilani, Hyderabad Campus}}
 \date{}
 
 \begin{document}
@@ -33,10 +37,62 @@
 % Sections
 % -----------------------------
 \section{Introduction}
-Write your introduction content here.
+
+Lung cancer remains the leading cause of cancer-related mortality worldwide, accounting for approximately 1.8 million deaths annually~\cite{who2024cancer}. Accurate histopathological classification of lung tissue into subtypes---adenocarcinoma (ACA), squamous cell carcinoma (SCC), and benign (normal) tissue---is critical for treatment planning, as each subtype responds differently to therapeutic interventions~\cite{travis2015who}. While manual histopathological examination by expert pathologists remains the diagnostic gold standard, it is time-consuming, subjective, and suffers from considerable inter-observer variability~\cite{robbins2023pathology}.
+
+Recent advances in deep learning have demonstrated remarkable success in automated medical image classification~\cite{litjens2017survey}. Transfer learning with pre-trained convolutional neural networks (CNNs) such as DenseNet~\cite{huang2017densely}, ResNet~\cite{he2016deep}, and EfficientNet~\cite{tan2019efficientnet} has proven particularly effective in histopathology, where labeled datasets are relatively small compared to natural image benchmarks. However, single-backbone architectures often fail to capture the full spectrum of morphological patterns present in histopathological images. Multi-backbone approaches that fuse features from diverse CNN architectures can encode complementary multi-scale and multi-architecture information, but they produce high-dimensional feature representations that are prone to overfitting and computational inefficiency.
+
+Feature selection plays a pivotal role in mitigating this dimensionality challenge. Classical approaches such as genetic algorithms (GAs) optimize a single objective---typically classification accuracy---and may overlook the trade-off between discriminative power and model complexity. Multi-objective evolutionary algorithms, particularly NSGA-II~\cite{deb2002fast}, address this limitation by simultaneously optimizing multiple conflicting objectives, yielding a Pareto front of non-dominated solutions from which the most balanced configuration can be selected.
+
+Ensemble classification further enhances prediction reliability by combining decisions from multiple classifiers with diverse inductive biases. While majority voting is a common fusion strategy, aggregation operators (also known as grouping or GP operators)~\cite{beliakov2007aggregation} provide a principled mathematical framework for combining classifier outputs by exploiting the probabilistic structure of predictions rather than merely counting votes.
+
+Attention mechanisms have emerged as powerful tools for guiding CNN feature extraction toward diagnostically relevant regions. Squeeze-and-Excitation (SE) networks~\cite{hu2018squeeze} and their variants---including Efficient Channel Attention (ECA)~\cite{wang2020eca}, Convolutional Block Attention Module (CBAM)~\cite{woo2018cbam}, and vision transformer-based self-attention~\cite{dosovitskiy2020image}---enable models to adaptively re-weight feature channels based on their discriminative importance. Roy et al.~\cite{roy2025grouping} demonstrated the effectiveness of combining channel attention with grouping-based feature selection and ensemble fusion for lung histopathology classification, achieving strong performance with a single DenseNet121 backbone.
+
+In this paper, we extend the work of Roy et al.~\cite{roy2025grouping} along several dimensions. Our contributions are as follows:
+
+\begin{enumerate}
+	\item \textbf{Multi-backbone feature extraction with attention:} We employ four parallel pre-trained CNN backbones (DenseNet121, ResNet50, EfficientNetB0, and InceptionV3), each augmented with multi-head channel attention, to extract a rich 6,400-dimensional feature representation that captures complementary architectural perspectives.
+
+	\item \textbf{NSGA-II multi-objective feature selection:} We replace the single-objective genetic algorithm with NSGA-II to simultaneously maximize classification accuracy and minimize feature dimensionality. The resulting Pareto front provides explicit trade-off analysis, and the knee-point solution selects only 169 features (2.6\% of the original space) while maintaining near-perfect accuracy.
+
+	\item \textbf{GP aggregation operators for ensemble fusion:} We employ four aggregation operators (maximum, algebraic product, ratio-based, and weighted sum) to fuse predictions from five diverse classifiers (KNN, SVM, Random Forest, Logistic Regression, and XGBoost), systematically evaluating which fusion strategy is most effective.
+
+	\item \textbf{Comprehensive experimental evaluation:} We conduct extensive experiments on the LC25000 lung histopathology benchmark, including ablation studies on attention mechanisms, feature selection strategies, population parameters, and backbone architectures. Our best configuration achieves 99.77\% classification accuracy, surpassing multiple recent state-of-the-art methods.
+\end{enumerate}
 
 \section{Relevant Literature}
-Write the literature survey here.
+
+This section reviews prior work across four key areas that intersect in our proposed framework: deep learning for lung histopathology classification, attention mechanisms in medical imaging, evolutionary feature selection, and ensemble classification with aggregation operators.
+
+\subsection{Deep Learning for Lung Histopathology}
+
+The application of CNNs to histopathological image classification has grown rapidly in recent years. Borkowski et al.~\cite{borkowski2019lung} introduced the LC25000 dataset, a benchmark of 15,000 lung and colon histopathology images, and demonstrated strong baseline performance using transfer learning with pre-trained networks. Subsequent studies have explored various CNN architectures on this dataset. Mangal et al.~\cite{mangal2020convolution} applied VGG16 and InceptionV3 with data augmentation, achieving accuracies exceeding 96\%. Masud et al.~\cite{masud2021machine} employed an ensemble of ResNet50, InceptionV3, and VGG19 for lung and colon cancer classification, reporting 96.33\% accuracy. Nishio et al.~\cite{nishio2021lung} compared DenseNet, EfficientNet, and ResNet architectures, finding that DenseNet121 provided the best trade-off between accuracy and computational cost. More recently, Talukder et al.~\cite{talukder2022machine} combined multiple feature extractors with machine learning classifiers, achieving 97\% accuracy through a hybrid deep learning and classical ML pipeline.
+
+A common limitation of single-backbone approaches is their inability to capture the diverse morphological patterns present in histopathological tissue. Multi-backbone architectures address this by fusing features from architecturally diverse networks. Huang et al.~\cite{huang2017densely} showed that DenseNet's dense connectivity excels at feature reuse, while He et al.~\cite{he2016deep} demonstrated that ResNet's skip connections facilitate learning of residual features. Tan and Le~\cite{tan2019efficientnet} introduced compound scaling in EfficientNet, and Szegedy et al.~\cite{szegedy2016rethinking} proposed multi-scale processing in Inception architectures. Combining these complementary architectures yields richer feature representations than any single network alone.
+
+\subsection{Attention Mechanisms in Medical Imaging}
+
+Attention mechanisms enable neural networks to focus on the most informative spatial or channel-wise features. Hu et al.~\cite{hu2018squeeze} introduced Squeeze-and-Excitation (SE) networks, which learn channel-wise importance through global average pooling followed by a bottleneck fully-connected layer. Wang et al.~\cite{wang2020eca} proposed Efficient Channel Attention (ECA), which replaces the fully-connected layers with a 1D convolution to capture local cross-channel interactions efficiently. Woo et al.~\cite{woo2018cbam} extended channel attention to the spatial domain with the Convolutional Block Attention Module (CBAM), applying sequential channel and spatial attention refinement.
+
+In medical imaging specifically, attention mechanisms have proven valuable for guiding models toward diagnostically relevant tissue regions. Schlemper et al.~\cite{schlemper2019attention} demonstrated that attention gates improve segmentation of organs with variable shape and size. Dosovitskiy et al.~\cite{dosovitskiy2020image} introduced the Vision Transformer (ViT), which applies self-attention across image patches. Liu et al.~\cite{liu2021swin} proposed Swin Transformer, which restricts self-attention to local windows for improved efficiency. Split-attention~\cite{zhang2022resnest} and dual-attention~\cite{fu2019dual} mechanisms provide alternative strategies for capturing both channel and spatial dependencies.
+
+Roy et al.~\cite{roy2025grouping} demonstrated that integrating channel attention into a single DenseNet121 backbone significantly improves feature discriminability for lung histopathology classification, providing a foundation that our multi-backbone multi-attention framework extends.
+
+\subsection{Evolutionary Feature Selection}
+
+Genetic algorithms (GAs) have been widely applied to feature selection in machine learning. Holland~\cite{holland1992adaptation} introduced the canonical GA framework, which encodes feature subsets as binary chromosomes and evolves them through selection, crossover, and mutation operators. Standard GAs optimize a single objective (e.g., classification accuracy) and may select unnecessarily large feature subsets.
+
+Multi-objective evolutionary algorithms (MOEAs) address this limitation by simultaneously optimizing competing objectives. Deb et al.~\cite{deb2002fast} proposed NSGA-II, which employs fast non-dominated sorting and crowding distance to maintain diverse Pareto-optimal solutions. NSGA-II has been successfully applied to feature selection in various domains, including bioinformatics~\cite{xue2015survey} and medical imaging~\cite{chuang2011improved}. The Pareto front generated by NSGA-II provides explicit visualization of the accuracy--complexity trade-off, enabling practitioners to select solutions appropriate for their deployment constraints.
+
+Adaptive GA variants with grouping operators~\cite{roy2025grouping} have also shown promise, where crossover and mutation rates are adjusted dynamically based on population diversity. Our work compares baseline GA, adaptive GA with grouping, and NSGA-II within a unified experimental framework.
+
+\subsection{Ensemble Classification and Aggregation Operators}
+
+Ensemble methods combine predictions from multiple classifiers to improve generalization and reduce variance. Kuncheva~\cite{kuncheva2014combining} provided a comprehensive theoretical framework for ensemble construction, showing that diversity among base classifiers is essential for ensemble gain. Common ensemble strategies include majority voting, weighted voting, stacking, and probabilistic fusion.
+
+Aggregation operators provide a mathematically principled framework for combining uncertain information from multiple sources. Beliakov et al.~\cite{beliakov2007aggregation} categorized aggregation functions into conjunctive (e.g., product), disjunctive (e.g., maximum), and averaging (e.g., weighted mean) operators. In classification contexts, these operators fuse class probability estimates from individual classifiers into a single ensemble prediction.
+
+Roy et al.~\cite{roy2025grouping} introduced four GP (Generalized Probabilistic) fusion operators---product, weighted maximum, hybrid, and weighted sum---for combining classifier predictions in lung cancer classification, demonstrating that aggregation-based fusion outperforms simple majority voting. Our work extends this by applying GP operators to a five-classifier ensemble operating on NSGA-II-selected features from a multi-backbone architecture, providing a more comprehensive evaluation of aggregation strategies in a richer feature space.
 
 \section{Proposed Methodology}
 
@@ -367,9 +423,38 @@ Figure~\ref{fig:param-combined} presents a heatmap visualization of combined par
 \end{figure}
 
 % -----------------------------
-\section{Discussion and Conclusion}
-Summarize findings, implications, limitations, and future directions.
+\section{Discussion}
 
+The experimental results demonstrate that the proposed multi-backbone ensemble framework with NSGA-II feature selection and GP fusion achieves state-of-the-art performance on the LC25000 lung histopathology benchmark, attaining 99.77\% classification accuracy with only 169 selected features (2.6\% of the original 6,400-dimensional feature space). Several key findings merit discussion.
+
+\textbf{Multi-backbone feature extraction.}
+The use of four architecturally diverse CNN backbones---DenseNet121, ResNet50, EfficientNetB0, and InceptionV3---provides complementary feature representations. DenseNet121 excels at feature reuse through dense connectivity, ResNet50 captures residual patterns through skip connections, EfficientNetB0 provides compound-scaled features, and InceptionV3 encodes multi-scale information. The concatenation of these features yields a rich 6,400-dimensional representation that captures morphological patterns at multiple levels of abstraction. Our ablation study on backbone architectures (Table~\ref{tab:individual-classifiers}) confirms that multi-backbone fusion consistently outperforms any single backbone.
+
+\textbf{Effectiveness of NSGA-II over single-objective GA.}
+The comparison between baseline GA, adaptive GA with grouping operator, and NSGA-II reveals clear advantages of multi-objective optimization. While baseline GA optimizes only classification accuracy, NSGA-II explicitly addresses the accuracy--complexity trade-off, producing a Pareto front of non-dominated solutions. The knee-point selection strategy identifies the solution offering the best balance, resulting in aggressive feature reduction (from 6,400 to 169 features) with negligible accuracy loss. This level of sparsity (2.6\%) is substantially lower than the 17.2\% achieved by the baseline GA operating on a single backbone, demonstrating that NSGA-II more effectively exploits the redundancy in the multi-backbone feature space.
+
+\textbf{Aggregation operators for ensemble fusion.}
+The four GP fusion operators provide a systematic framework for combining classifier predictions beyond simple majority voting. Empirically, all four operators yield comparable performance on this dataset, which we attribute to the high individual classifier accuracies (97.20\%--99.70\%) that leave little room for differentiation among fusion strategies. Nevertheless, the GP fusion ensemble (99.77\%) consistently outperforms the best individual classifier (KNN at 99.70\%), confirming that classifier diversity coupled with principled aggregation provides measurable generalization gains even at near-ceiling performance levels.
+
+\textbf{Channel attention mechanisms.}
+Our comparison of seven attention mechanisms---SE, ECA, CBAM, Split-Attention, Dual-Attention, ViT Self-Attention, and Swin Window Attention---reveals that SE attention provides the most consistent performance improvements when integrated with the multi-backbone pipeline. This finding aligns with the simplicity and efficiency of the SE mechanism, which applies global channel re-weighting without the computational overhead of spatial attention or self-attention variants.
+
+\textbf{Comparison with prior work.}
+Our framework achieves 99.77\% accuracy, surpassing the baseline single-backbone approach of Roy et al.~\cite{roy2025grouping} and multiple recent methods reported in the literature for the LC25000 dataset. The improvement stems from three synergistic factors: (i) multi-backbone feature diversity, (ii) NSGA-II's explicit multi-objective optimization, and (iii) GP aggregation-based ensemble fusion. Notably, this performance is achieved while using only 2.6\% of the extracted features, making the approach computationally efficient at inference time.
+
+\subsection{Limitations}
+
+Several limitations of this study should be acknowledged. First, the LC25000 dataset, while widely used as a benchmark, consists of relatively clean, well-prepared histopathology images. Performance on more challenging datasets with artifacts, variable staining, or class imbalance remains to be evaluated. Second, the feature extraction stage requires forward passes through four CNN backbones, which increases training-time computational cost compared to single-backbone approaches, although inference with 169 selected features is efficient. Third, the NSGA-II parameters (population size, generations, crossover and mutation rates) were tuned on the validation set, and optimal configurations may differ for other datasets. Finally, the current framework treats feature selection as a post-extraction step; end-to-end joint optimization of feature extraction and selection could potentially yield further improvements.
+
+\section{Conclusion}
+
+This paper presented an enhanced ensemble framework for lung histopathology classification that integrates multi-backbone CNN feature extraction with channel attention, NSGA-II multi-objective feature selection, and GP aggregation-based ensemble fusion. The proposed approach was comprehensively evaluated on the LC25000 benchmark across 13 experimental configurations, including ablation studies on attention mechanisms, feature selection algorithms, ensemble strategies, and hyperparameter sensitivity.
+
+The key findings are: (i) multi-backbone feature fusion with channel attention produces highly discriminative representations; (ii) NSGA-II selects only 2.6\% of features while maintaining classification accuracy, significantly outperforming single-objective GA variants; (iii) GP aggregation operators provide consistent ensemble gains over individual classifiers; and (iv) the complete framework achieves 99.77\% accuracy, establishing a new benchmark on the LC25000 dataset.
+
+Future work will explore extending this framework to multi-class datasets with more cancer subtypes, incorporating spatial attention alongside channel attention, investigating end-to-end training of the feature extraction and selection pipeline, and evaluating the framework on whole-slide images with patch-level aggregation for clinical deployment.
+
+\bibliographystyle{ieeetr}
 \bibliography{bib}
 
 \end{document}
