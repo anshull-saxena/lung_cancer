@@ -32,6 +32,7 @@ TABLE_MAP = {
     14: "experiments.table11_14_ablation",
     15: "experiments.table15_ensemble_comparison",
     16: "experiments.table16_full_pipeline",
+    17: "experiments.table17_saturation_threshold",
 }
 
 # Execution order (module name → display label)
@@ -46,6 +47,7 @@ ORDERED_MODULES = [
     ("experiments.table11_14_ablation",          "Tables 11-14"),
     ("experiments.table15_ensemble_comparison",  "Table 15 (Ensemble Comparison)"),
     ("experiments.table16_full_pipeline",        "Table 16 (Full Pipeline)"),
+    ("experiments.table17_saturation_threshold", "Table 17 (Saturation Threshold)"),
 ]
 
 

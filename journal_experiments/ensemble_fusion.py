@@ -9,6 +9,15 @@ from classifiers import compute_specificity
 from config import CLASS_NAMES
 
 
+# Saturation threshold used by the probabilistic fusion operators.
+SATURATION_THRESHOLD = 0.9
+
+
+def _saturate(x, threshold=SATURATION_THRESHOLD):
+    """Apply saturation: return 1 where x >= threshold, else x."""
+    return np.where(x >= threshold, 1.0, x)
+
+
 # ============================================================================
 # WEIGHT CALCULATION
 # ============================================================================
@@ -44,29 +53,73 @@ def compute_epsilon_weights(accuracies):
 # GP FUSION OPERATORS
 # ============================================================================
 
-def gp1_fusion(z1, z2, z3, z4):
-    """GP1: Maximum operator — 1 - min(1-z1, 1-z2, 1-z3, 1-z4) = max(z)."""
-    return 1.0 - np.minimum.reduce([1 - z1, 1 - z2, 1 - z3, 1 - z4])
+def gp1_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
+    """GP1 (g1): Maximum operator with saturation.
+
+    Base operator: max(z1, z2, z3, z4)
+    Saturation: if base >= T, return 1 else base.
+    """
+    base = np.maximum.reduce([z1, z2, z3, z4])
+    return _saturate(base, threshold)
 
 
-def gp2_fusion(z1, z2, z3, z4):
-    """GP2: Algebraic product — 1 - (1-z1)(1-z2)(1-z3)(1-z4)."""
-    return 1.0 - (1 - z1) * (1 - z2) * (1 - z3) * (1 - z4)
+def gp2_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
+    """GP2 (g2): Probabilistic OR (noisy-OR) with saturation.
+
+    Base operator:
+        f = 1 - \prod_i (1 - z_i)
+    Saturation:
+        g = 1 if f >= T else f
+    """
+    base = 1.0 - (1 - z1) * (1 - z2) * (1 - z3) * (1 - z4)
+    return _saturate(base, threshold)
 
 
-def gp3_fusion(z1, z2, z3, z4):
-    """GP3: Ratio-based — 1 - (1 + z1*z2*z3*z4) / ((1-z1)(1-z2)(1-z3)(1-z4))."""
-    numerator = 1.0 + z1 * z2 * z3 * z4
-    denominator = (1 - z1) * (1 - z2) * (1 - z3) * (1 - z4)
-    denominator = np.maximum(denominator, 1e-10)
-    return 1.0 - numerator / denominator
+def gp3_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
+    """GP3 (g3): Softened probabilistic OR with saturation.
+
+    Base operator:
+        f = 1 - sqrt(\prod_i (1 - z_i))
+    Saturation:
+        g = 1 if f >= T else f
+    """
+    prod_comp = (1 - z1) * (1 - z2) * (1 - z3) * (1 - z4)
+    prod_comp = np.maximum(prod_comp, 0.0)
+    base = 1.0 - np.sqrt(prod_comp)
+    return _saturate(base, threshold)
 
 
-def gp4_fusion(z1, z2, z3, z4):
-    """GP4: Weighted sum — (z1 + z2 + z3 + z4) / (1 + z1*z2*z3*z4)."""
-    numerator = z1 + z2 + z3 + z4
-    denominator = 1.0 + z1 * z2 * z3 * z4
-    return numerator / denominator
+def gp4_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
+    """GP4 (g4): Conservative min+product mix with saturation.
+
+    Base operator:
+        f = 1 - sqrt( min_i(1 - z_i) * \prod_i(1 - z_i) )
+    Saturation:
+        g = 1 if f >= T else f
+    """
+    comp = [1 - z1, 1 - z2, 1 - z3, 1 - z4]
+    min_comp = np.minimum.reduce(comp)
+    prod_comp = comp[0] * comp[1] * comp[2] * comp[3]
+    inner = np.maximum(min_comp * prod_comp, 0.0)
+    base = 1.0 - np.sqrt(inner)
+    return _saturate(base, threshold)
+
+
+def gp5_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
+    """GP5 (g5): Confidence-normalized max with saturation.
+
+    Base operator:
+        f = max(z_i) / ( max(z_i) + sqrt(\prod_i(1 - z_i)) )
+    Saturation:
+        g = 1 if f >= T else f
+    """
+    num = np.maximum.reduce([z1, z2, z3, z4])
+    prod_comp = (1 - z1) * (1 - z2) * (1 - z3) * (1 - z4)
+    prod_comp = np.maximum(prod_comp, 0.0)
+    denom = num + np.sqrt(prod_comp)
+    denom = np.maximum(denom, 1e-10)
+    base = num / denom
+    return _saturate(base, threshold)
 
 
 # ============================================================================
@@ -105,15 +158,17 @@ def weighted_probability_fusion(probas_list, weights):
 # GP FUSION APPLICATOR (uses top 4 classifiers)
 # ============================================================================
 
-def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True):
+def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True,
+                    threshold=SATURATION_THRESHOLD):
     """
     Apply a GP fusion operator to the top-4 classifiers' weighted probabilities.
 
     Args:
         probas_list: list of 4 arrays (top classifiers, ranked), each (n_samples, n_classes)
         weights: array of 4 floats (epsilon weights for the top-4)
-        fusion_func: one of {gp1_fusion, gp2_fusion, gp3_fusion, gp4_fusion}
+        fusion_func: one of {gp1_fusion, ..., gp5_fusion}
         normalize: whether to normalize output to valid probability distribution
+        threshold: saturation threshold T
 
     Returns:
         fused_proba: (n_samples, n_classes)
@@ -126,7 +181,7 @@ def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True):
         z2 = weights[1] * probas_list[1][:, c]
         z3 = weights[2] * probas_list[2][:, c]
         z4 = weights[3] * probas_list[3][:, c]
-        fused_proba[:, c] = fusion_func(z1, z2, z3, z4)
+        fused_proba[:, c] = fusion_func(z1, z2, z3, z4, threshold=threshold)
 
     if normalize:
         row_sums = fused_proba.sum(axis=1, keepdims=True)
@@ -141,17 +196,19 @@ def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True):
 # ============================================================================
 
 def evaluate_all_ensemble_methods(clf_names, probas_dict, val_acc_dict,
-                                  y_test, class_names=CLASS_NAMES):
+                                  y_test, class_names=CLASS_NAMES,
+                                  threshold=SATURATION_THRESHOLD):
     """
-    Run all 6 ensemble strategies and return a list of result dicts.
+    Run all ensemble strategies and return a list of result dicts.
 
-    Strategies: Majority Vote, Weighted Fusion, GP1, GP2, GP3, GP4.
+    Strategies: Majority Vote, Weighted Fusion, GP1, GP2, GP3, GP4, GP5.
 
     Args:
         clf_names: list of classifier names in the order they were trained
         probas_dict: dict {clf_name: (n_samples, n_classes) probability array}
         val_acc_dict: dict {clf_name: float validation accuracy}
         y_test: ground truth labels (n_samples,)
+        threshold: saturation threshold T for GP operators
 
     Returns:
         list of dicts, each with method, accuracy, precision, recall, f1,
@@ -206,20 +263,22 @@ def evaluate_all_ensemble_methods(clf_names, probas_dict, val_acc_dict,
     wpf_proba = weighted_probability_fusion(ranked_probas, epsilon)
     results.append(_metrics_from_proba(wpf_proba, "Weighted Fusion"))
 
-    # 3-6. GP1 through GP4 (top 4 classifiers)
+    # 3-7. GP1 through GP5 (top 4 classifiers)
     top4_probas = ranked_probas[:4]
     top4_eps = epsilon[:4]
     # Re-normalize top4 weights so they sum to the same proportion
     top4_eps_norm = top4_eps / top4_eps.sum() * epsilon[:4].sum()
 
     gp_operators = [
-        ("GP1 (Max)", gp1_fusion),
-        ("GP2 (Product)", gp2_fusion),
-        ("GP3 (Ratio)", gp3_fusion),
-        ("GP4 (Weighted Sum)", gp4_fusion),
+        ("GP1 (Max+Sat)", gp1_fusion),
+        ("GP2 (Noisy-OR+Sat)", gp2_fusion),
+        ("GP3 (Soft OR+Sat)", gp3_fusion),
+        ("GP4 (Min×Prod+Sat)", gp4_fusion),
+        ("GP5 (Norm Max+Sat)", gp5_fusion),
     ]
     for gp_name, gp_func in gp_operators:
-        gp_proba = apply_gp_fusion(top4_probas, top4_eps, gp_func, normalize=True)
+        gp_proba = apply_gp_fusion(top4_probas, top4_eps, gp_func, normalize=True,
+                                   threshold=threshold)
         results.append(_metrics_from_proba(gp_proba, gp_name))
 
     # Print epsilon weights for reference

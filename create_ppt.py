@@ -258,7 +258,7 @@ items = [
     "",
     "GP1 (Maximum):       1 − min(1−z₁, 1−z₂, 1−z₃, 1−z₄)",
     "GP2 (Algebraic):     1 − (1−z₁)(1−z₂)(1−z₃)(1−z₄)",
-    "GP3 (Ratio):           1 − (1 + z₁z₂z₃z₄) / ((1−z₁)(1−z₂)(1−z₃)(1−z₄))",
+    "GP3 (Ratio):           (1 + z₁z₂z₃z₄) / ((1−z₁)(1−z₂)(1−z₃)(1−z₄)) − 1",
     "GP4 (Weighted Sum): (z₁+z₂+z₃+z₄) / (1 + z₁z₂z₃z₄)",
     "",
     "Majority Vote: Mode across all 5 classifiers",
