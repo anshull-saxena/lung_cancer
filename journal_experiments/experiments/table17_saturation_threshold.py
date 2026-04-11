@@ -10,6 +10,7 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
+import argparse
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -21,8 +22,11 @@ from sklearn.metrics import (
 from sklearn.preprocessing import label_binarize
 
 from config import set_seed, DATA_DIR, RESULTS_DIR, CLASS_NAMES, SEED
-from data_loader import load_dataset, get_splits
-from models.backbone import build_feature_extractor, extract_features_cached
+from data_loader import load_dataset_paths, get_splits
+from models.backbone import (
+    build_feature_extractor,
+    extract_features_from_paths_cached,
+)
 from feature_selection.adaptive_ga import AdaptiveGA
 from classifiers import get_all_classifiers, train_and_evaluate, compute_specificity
 from ensemble_fusion import (
@@ -114,14 +118,21 @@ def _plot_roc_curves(results, threshold_val, class_names=CLASS_NAMES):
 
 
 def run():
+    ap = argparse.ArgumentParser(add_help=False)
+    ap.add_argument("--batch-size", type=int, default=16,
+                    help="Batch size for CNN feature extraction")
+    ap.add_argument("--force-features", action="store_true",
+                    help="Recompute feature cache even if .npy exists")
+    args, _ = ap.parse_known_args()
+
     set_seed()
     print("=" * 70)
     print("  Table 17: Saturation Threshold (T) Sensitivity Analysis")
     print("=" * 70)
 
     # ---- 1. Load dataset ----
-    print("\n[1] Loading dataset ...")
-    X, y = load_dataset(DATA_DIR)
+    print("\n[1] Indexing dataset (paths only; low-memory) ...")
+    X, y = load_dataset_paths(DATA_DIR)
 
     # ---- 2. Split ----
     print("\n[2] Splitting data ...")
@@ -135,8 +146,20 @@ def run():
     model, feat_dim = build_feature_extractor("densenet121", "se")
 
     print("\n[4] Extracting features ...")
-    F_train_val = extract_features_cached(model, X_train_val, "t17_trainval_dense_se")
-    F_test = extract_features_cached(model, X_test, "t17_test_dense_se")
+    F_train_val = extract_features_from_paths_cached(
+        model,
+        X_train_val,
+        "t17_trainval_dense_se",
+        force=args.force_features,
+        batch_size=args.batch_size,
+    )
+    F_test = extract_features_from_paths_cached(
+        model,
+        X_test,
+        "t17_test_dense_se",
+        force=args.force_features,
+        batch_size=args.batch_size,
+    )
     F_train = F_train_val[:len(X_train)]
     F_val = F_train_val[len(X_train):]
 

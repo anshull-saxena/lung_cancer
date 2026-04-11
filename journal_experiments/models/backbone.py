@@ -86,6 +86,8 @@ def extract_features(model, X, batch_size=16):
     for start in range(0, n, batch_size):
         end = min(start + batch_size, n)
         batch = X[start:end]
+        if batch.dtype != np.float32:
+            batch = batch.astype(np.float32, copy=False)
         pred = model.predict(batch, verbose=0)
         feats.append(pred)
         if (start // batch_size + 1) % 50 == 0:
@@ -93,7 +95,43 @@ def extract_features(model, X, batch_size=16):
     return np.vstack(feats)
 
 
-def extract_features_cached(model, X, cache_name, force=False):
+def extract_features_from_paths(model, paths, img_size=IMG_SIZE, batch_size=16):
+    """Extract features by streaming images from disk.
+
+    Args:
+        model: Keras feature extractor model
+        paths: array-like of image file paths
+        img_size: (H, W)
+        batch_size: prediction batch size
+
+    Returns:
+        features: numpy array (N, feature_dim)
+    """
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+
+    paths = list(paths)
+    n = len(paths)
+    feats = []
+    for start in range(0, n, batch_size):
+        end = min(start + batch_size, n)
+        batch_paths = paths[start:end]
+        batch_imgs = []
+        for p in batch_paths:
+            try:
+                img = load_img(p, target_size=img_size)
+                batch_imgs.append(img_to_array(img))
+            except Exception as e:
+                raise RuntimeError(f"Failed to load image: {p} ({e})") from e
+
+        batch = np.asarray(batch_imgs, dtype=np.float32)
+        pred = model.predict(batch, verbose=0)
+        feats.append(pred)
+        if (start // batch_size + 1) % 50 == 0:
+            print(f"  Extracted {end}/{n} ...")
+    return np.vstack(feats)
+
+
+def extract_features_cached(model, X, cache_name, force=False, batch_size=16):
     """
     Extract features with disk caching (.npy files).
 
@@ -111,7 +149,28 @@ def extract_features_cached(model, X, cache_name, force=False):
         print(f"  Loading cached features: {cache_path}")
         return np.load(cache_path)
     print(f"  Extracting features ({cache_name}) ...")
-    feats = extract_features(model, X)
+    feats = extract_features(model, X, batch_size=batch_size)
+    np.save(cache_path, feats)
+    print(f"  Cached to {cache_path}")
+    return feats
+
+
+def extract_features_from_paths_cached(
+    model,
+    paths,
+    cache_name,
+    *,
+    img_size=IMG_SIZE,
+    force=False,
+    batch_size=16,
+):
+    """Extract features from disk paths with caching (.npy)."""
+    cache_path = os.path.join(CACHE_DIR, f"{cache_name}.npy")
+    if os.path.exists(cache_path) and not force:
+        print(f"  Loading cached features: {cache_path}")
+        return np.load(cache_path)
+    print(f"  Extracting features ({cache_name}) ...")
+    feats = extract_features_from_paths(model, paths, img_size=img_size, batch_size=batch_size)
     np.save(cache_path, feats)
     print(f"  Cached to {cache_path}")
     return feats

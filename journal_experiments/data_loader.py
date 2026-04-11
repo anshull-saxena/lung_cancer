@@ -41,6 +41,33 @@ def load_dataset(data_dir, img_size=IMG_SIZE):
     return X, y
 
 
+def load_dataset_paths(data_dir):
+    """Load dataset as file paths (no image pixels loaded).
+
+    This is a low-memory alternative to `load_dataset()`.
+
+    Args:
+        data_dir: path containing subfolders lung_aca, lung_n, lung_scc
+
+    Returns:
+        paths: np.array of shape (N,), dtype=str
+        y: np.array of integer labels (N,)
+    """
+    paths, labels = [], []
+    for label_idx, class_name in enumerate(CLASS_NAMES):
+        class_dir = os.path.join(data_dir, class_name)
+        filenames = sorted(os.listdir(class_dir))
+        print(f"  Indexing {class_name}: {len(filenames)} images ...")
+        for fname in filenames:
+            paths.append(os.path.join(class_dir, fname))
+            labels.append(label_idx)
+
+    paths = np.array(paths, dtype=object)
+    y = np.array(labels, dtype=np.int32)
+    print(f"  Dataset indexed: ({len(paths)},), classes={np.bincount(y)}")
+    return paths, y
+
+
 def get_splits(X, y, train_ratio=0.70, val_ratio=0.10, test_ratio=0.20, seed=SEED):
     """
     Stratified train/val/test split.
