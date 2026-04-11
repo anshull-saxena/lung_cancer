@@ -4,7 +4,13 @@ Crossover and mutation rates adapt based on population fitness diversity.
 """
 import random
 import numpy as np
-from deap import base, creator, tools
+try:
+    from deap import base, creator, tools
+except ModuleNotFoundError as e:
+    raise ModuleNotFoundError(
+        "Missing optional dependency 'deap' required for GA-based feature selection. "
+        "Install it with: pip install deap (or pip install -r requirements.txt)."
+    ) from e
 from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 

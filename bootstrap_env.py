@@ -83,7 +83,14 @@ def main() -> int:
 
     # Import + version + GPU checks inside the venv
     check_code = r"""
-import importlib, platform, sys
+import importlib, platform, sys, warnings
+
+# Keep bootstrap output readable (TensorFlow/Keras sometimes triggers harmless warnings).
+warnings.filterwarnings(
+    "ignore",
+    message=r".*np\.object.*",
+    category=FutureWarning,
+)
 mods = ["numpy","pandas","scipy","sklearn","deap","PIL","matplotlib","seaborn","psutil","tqdm","xgboost"]
 print("Python (venv):", sys.version.split()[0])
 print("Platform:", platform.platform())

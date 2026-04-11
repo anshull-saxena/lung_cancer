@@ -67,7 +67,7 @@ def gp2_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
     """GP2 (g2): Probabilistic OR (noisy-OR) with saturation.
 
     Base operator:
-        f = 1 - \prod_i (1 - z_i)
+        f = 1 - \\prod_i (1 - z_i)
     Saturation:
         g = 1 if f >= T else f
     """
@@ -79,7 +79,7 @@ def gp3_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
     """GP3 (g3): Softened probabilistic OR with saturation.
 
     Base operator:
-        f = 1 - sqrt(\prod_i (1 - z_i))
+        f = 1 - sqrt(\\prod_i (1 - z_i))
     Saturation:
         g = 1 if f >= T else f
     """
@@ -93,7 +93,7 @@ def gp4_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
     """GP4 (g4): Conservative min+product mix with saturation.
 
     Base operator:
-        f = 1 - sqrt( min_i(1 - z_i) * \prod_i(1 - z_i) )
+        f = 1 - sqrt( min_i(1 - z_i) * \\prod_i(1 - z_i) )
     Saturation:
         g = 1 if f >= T else f
     """
@@ -109,7 +109,7 @@ def gp5_fusion(z1, z2, z3, z4, threshold=SATURATION_THRESHOLD):
     """GP5 (g5): Confidence-normalized max with saturation.
 
     Base operator:
-        f = max(z_i) / ( max(z_i) + sqrt(\prod_i(1 - z_i)) )
+        f = max(z_i) / ( max(z_i) + sqrt(\\prod_i(1 - z_i)) )
     Saturation:
         g = 1 if f >= T else f
     """
