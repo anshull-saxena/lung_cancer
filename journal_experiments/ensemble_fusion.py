@@ -161,11 +161,15 @@ def weighted_probability_fusion(probas_list, weights):
 def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True,
                     threshold=SATURATION_THRESHOLD):
     """
-    Apply a GP fusion operator to the top-4 classifiers' weighted probabilities.
+    Apply a GP fusion operator to the top-4 classifiers' raw probabilities.
+
+    Epsilon weights are used only for ranking/selecting top-4 classifiers
+    (done by the caller). GP operators receive raw probabilities so that
+    the saturation threshold T operates on the natural [0, 1] range.
 
     Args:
         probas_list: list of 4 arrays (top classifiers, ranked), each (n_samples, n_classes)
-        weights: array of 4 floats (epsilon weights for the top-4)
+        weights: array of 4 floats (epsilon weights — kept for API compat, not used for scaling)
         fusion_func: one of {gp1_fusion, ..., gp5_fusion}
         normalize: whether to normalize output to valid probability distribution
         threshold: saturation threshold T
@@ -177,10 +181,13 @@ def apply_gp_fusion(probas_list, weights, fusion_func, normalize=True,
     fused_proba = np.zeros((n_samples, n_classes))
 
     for c in range(n_classes):
-        z1 = weights[0] * probas_list[0][:, c]
-        z2 = weights[1] * probas_list[1][:, c]
-        z3 = weights[2] * probas_list[2][:, c]
-        z4 = weights[3] * probas_list[3][:, c]
+        # Pass RAW probabilities to GP operators (not epsilon-weighted).
+        # Epsilon is used only for ranking/selecting which top-4 classifiers
+        # to feed here. Saturation threshold operates on [0,1] probability range.
+        z1 = probas_list[0][:, c]
+        z2 = probas_list[1][:, c]
+        z3 = probas_list[2][:, c]
+        z4 = probas_list[3][:, c]
         fused_proba[:, c] = fusion_func(z1, z2, z3, z4, threshold=threshold)
 
     if normalize:

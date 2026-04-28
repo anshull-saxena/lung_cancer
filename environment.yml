@@ -2,10 +2,11 @@
 name: lung_cancer
 
 channels:
-	- conda-forge
-	- defaults
+  - conda-forge
+  - defaults
 
 dependencies:
-	- pip
-	- pip:
-			- -r requirements.txt
+  - python=3.11
+  - pip
+  - pip:
+      - -r requirements.txt

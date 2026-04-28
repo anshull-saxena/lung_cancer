@@ -1,0 +1,10 @@
+Parameter,Value
+Population Size,40
+Generations,50
+Crossover Probability,0.8
+Mutation Probability,0.1
+Bit-flip Probability,0.05
+Inner CV Folds,3
+Classifier (fitness),"KNN (k=5, distance)"
+L0 Penalty,0.001
+Random Seed,42

@@ -1,0 +1,170 @@
+{
+  "0.6": [
+    {
+      "accuracy": 0.9903,
+      "precision": 0.9906,
+      "sensitivity": 0.9903,
+      "specificity": 0.9952,
+      "f1": 0.9904,
+      "auc": 0.9998,
+      "mcc": 0.9856,
+      "method": "Grouping 1 (GP1)"
+    },
+    {
+      "accuracy": 0.9783,
+      "precision": 0.9797,
+      "sensitivity": 0.9783,
+      "specificity": 0.9892,
+      "f1": 0.9784,
+      "auc": 0.9993,
+      "mcc": 0.9681,
+      "method": "Grouping 2 (GP2)"
+    },
+    {
+      "accuracy": 0.9923,
+      "precision": 0.9925,
+      "sensitivity": 0.9923,
+      "specificity": 0.9962,
+      "f1": 0.9923,
+      "auc": 0.9999,
+      "mcc": 0.9886,
+      "method": "Grouping 3 (GP3)"
+    },
+    {
+      "accuracy": 0.984,
+      "precision": 0.9847,
+      "sensitivity": 0.984,
+      "specificity": 0.992,
+      "f1": 0.984,
+      "auc": 0.9996,
+      "mcc": 0.9763,
+      "method": "Grouping 4 (GP4)"
+    }
+  ],
+  "0.7": [
+    {
+      "accuracy": 0.9923,
+      "precision": 0.9925,
+      "sensitivity": 0.9923,
+      "specificity": 0.9962,
+      "f1": 0.9923,
+      "auc": 0.9999,
+      "mcc": 0.9886,
+      "method": "Grouping 1 (GP1)"
+    },
+    {
+      "accuracy": 0.9853,
+      "precision": 0.986,
+      "sensitivity": 0.9853,
+      "specificity": 0.9927,
+      "f1": 0.9854,
+      "auc": 0.9996,
+      "mcc": 0.9783,
+      "method": "Grouping 2 (GP2)"
+    },
+    {
+      "accuracy": 0.9933,
+      "precision": 0.9935,
+      "sensitivity": 0.9933,
+      "specificity": 0.9967,
+      "f1": 0.9933,
+      "auc": 0.9999,
+      "mcc": 0.9901,
+      "method": "Grouping 3 (GP3)"
+    },
+    {
+      "accuracy": 0.989,
+      "precision": 0.9894,
+      "sensitivity": 0.989,
+      "specificity": 0.9945,
+      "f1": 0.989,
+      "auc": 0.9998,
+      "mcc": 0.9837,
+      "method": "Grouping 4 (GP4)"
+    }
+  ],
+  "0.8": [
+    {
+      "accuracy": 0.9937,
+      "precision": 0.9938,
+      "sensitivity": 0.9937,
+      "specificity": 0.9968,
+      "f1": 0.9937,
+      "auc": 0.9999,
+      "mcc": 0.9905,
+      "method": "Grouping 1 (GP1)"
+    },
+    {
+      "accuracy": 0.9897,
+      "precision": 0.99,
+      "sensitivity": 0.9897,
+      "specificity": 0.9948,
+      "f1": 0.9897,
+      "auc": 0.9998,
+      "mcc": 0.9846,
+      "method": "Grouping 2 (GP2)"
+    },
+    {
+      "accuracy": 0.995,
+      "precision": 0.9951,
+      "sensitivity": 0.995,
+      "specificity": 0.9975,
+      "f1": 0.995,
+      "auc": 0.9999,
+      "mcc": 0.9925,
+      "method": "Grouping 3 (GP3)"
+    },
+    {
+      "accuracy": 0.9927,
+      "precision": 0.9928,
+      "sensitivity": 0.9927,
+      "specificity": 0.9963,
+      "f1": 0.9927,
+      "auc": 0.9999,
+      "mcc": 0.9891,
+      "method": "Grouping 4 (GP4)"
+    }
+  ],
+  "0.9": [
+    {
+      "accuracy": 0.996,
+      "precision": 0.996,
+      "sensitivity": 0.996,
+      "specificity": 0.998,
+      "f1": 0.996,
+      "auc": 0.9999,
+      "mcc": 0.994,
+      "method": "Grouping 1 (GP1)"
+    },
+    {
+      "accuracy": 0.993,
+      "precision": 0.9931,
+      "sensitivity": 0.993,
+      "specificity": 0.9965,
+      "f1": 0.993,
+      "auc": 0.9999,
+      "mcc": 0.9896,
+      "method": "Grouping 2 (GP2)"
+    },
+    {
+      "accuracy": 0.997,
+      "precision": 0.997,
+      "sensitivity": 0.997,
+      "specificity": 0.9985,
+      "f1": 0.997,
+      "auc": 1.0,
+      "mcc": 0.9955,
+      "method": "Grouping 3 (GP3)"
+    },
+    {
+      "accuracy": 0.994,
+      "precision": 0.9941,
+      "sensitivity": 0.994,
+      "specificity": 0.997,
+      "f1": 0.994,
+      "auc": 0.9999,
+      "mcc": 0.991,
+      "method": "Grouping 4 (GP4)"
+    }
+  ]
+}

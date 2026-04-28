@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Comparison of best grouping operator with individual classifiers}
+\label{tab:t2_best_vs_clf}
+\begin{tabular}{lccccccc}
+\toprule
+Method & Acc & Prec & Sens & Spec & F1 & AUC & MCC \\
+\midrule
+Best Grouping (Grouping 3 (GP3) τ=0.9) & 0.9970 & 0.9970 & 0.9970 & 0.9985 & 0.9970 & 1.0000 & 0.9955 \\
+KNN (Single) & 0.9957 & 0.9957 & 0.9957 & 0.9978 & 0.9957 & 0.9997 & 0.9935 \\
+SVM (Single) & 0.9777 & 0.9778 & 0.9777 & 0.9888 & 0.9777 & 0.9983 & 0.9666 \\
+RF (Single) & 0.9840 & 0.9840 & 0.9840 & 0.9920 & 0.9840 & 0.9991 & 0.9760 \\
+LR (Single) & 0.9777 & 0.9777 & 0.9777 & 0.9888 & 0.9777 & 0.9980 & 0.9665 \\
+XGBoost (Single) & 0.9927 & 0.9927 & 0.9927 & 0.9963 & 0.9927 & 0.9997 & 0.9890 \\
+\bottomrule
+\end{tabular}
+\end{table}

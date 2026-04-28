@@ -19,3 +19,5 @@ psutil
 setuptools
 # XGBoost (CPU on macOS; GPU optional on Linux)
 xgboost
+# Presentation generation
+python-pptx

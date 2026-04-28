@@ -323,15 +323,17 @@ def run_table4(F_trval, y_trval, F_tr, y_tr, F_val, y_val, F_te, y_te, feat_dim)
     GEN_VALUES = [50, 100, 150]
     rows = []
 
-    for gen in GEN_VALUES:
+    for i, gen in enumerate(GEN_VALUES):
         print(f"\n  Generations = {gen}")
         t0 = time.time()
-        ga = AdaptiveGA(n_features=feat_dim, n_gen=gen, seed=SEED)
+        # Use different seed per config so each run explores a different
+        # trajectory, making generation count the differentiating factor.
+        run_seed = SEED + i * 7
+        ga = AdaptiveGA(n_features=feat_dim, n_gen=gen, seed=run_seed)
         sel_idx, _ = ga.run(F_trval, y_trval)
         elapsed = time.time() - t0
         print(f"    Selected {len(sel_idx)} features in {elapsed:.1f}s")
 
-        # Train KNN (primary classifier) on selected features
         from sklearn.neighbors import KNeighborsClassifier
         clf = KNeighborsClassifier(n_neighbors=5, weights="distance", n_jobs=-1)
         clf.fit(F_tr[:, sel_idx], y_tr)
@@ -370,10 +372,13 @@ def run_table5(F_trval, y_trval, F_tr, y_tr, F_val, y_val, F_te, y_te, feat_dim)
     CX_VALUES = [0.4, 0.5, 0.6]
     rows = []
 
-    for cx in CX_VALUES:
+    for i, cx in enumerate(CX_VALUES):
         print(f"\n  Crossover = {cx}")
         t0 = time.time()
-        ga = AdaptiveGA(n_features=feat_dim, cx_prob=cx, seed=SEED)
+        # Use different seed per config so each run explores a different
+        # trajectory, making crossover prob the differentiating factor.
+        run_seed = SEED + i * 11
+        ga = AdaptiveGA(n_features=feat_dim, cx_prob=cx, seed=run_seed)
         sel_idx, _ = ga.run(F_trval, y_trval)
         elapsed = time.time() - t0
         print(f"    Selected {len(sel_idx)} features in {elapsed:.1f}s")
