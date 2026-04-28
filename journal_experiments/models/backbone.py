@@ -5,6 +5,13 @@ import os
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
+
+# Force TensorFlow to CPU to avoid CUDA version conflicts with PyTorch GPU
+try:
+    tf.config.set_visible_devices([], 'GPU')
+except Exception:
+    # Fail silently or log if config already initialized
+    pass
 from tensorflow.keras import layers, Model
 from tensorflow.keras.applications import DenseNet121, ResNet50, VGG16, EfficientNetB0
 from tensorflow.keras.applications.densenet import preprocess_input as pre_densenet

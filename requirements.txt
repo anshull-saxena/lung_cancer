@@ -1,11 +1,6 @@
 numpy>=1.26.0
 pandas
 scipy
-# Linux (NVIDIA CUDA): install CUDA-enabled TensorFlow
-tensorflow[and-cuda]>=2.17.0; platform_system == "Linux"
-# macOS (Apple Silicon): install Apple builds with Metal acceleration
-tensorflow-macos>=2.17.0; platform_system == "Darwin"
-tensorflow-metal>=1.1.0; platform_system == "Darwin"
 scikit-learn
 deap
 Pillow
@@ -17,7 +12,6 @@ matplotlib
 seaborn
 psutil
 setuptools
-# XGBoost (CPU on macOS; GPU optional on Linux)
 xgboost
-# Presentation generation
 python-pptx
+tensorflow>=2.17.0
