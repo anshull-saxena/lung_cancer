@@ -30,10 +30,10 @@ from sklearn.metrics import (
 from sklearn.preprocessing import label_binarize
 from sklearn.neighbors import KNeighborsClassifier
 
-# Add parent directory to path to import local modules
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-# For running inside journal_experiments/experiments/
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add current and journal_experiments directory to path to import local modules
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+sys.path.insert(0, os.path.join(current_dir, "journal_experiments"))
 
 from journal_experiments.config import (
     set_seed, DATA_DIR, RESULTS_DIR, CLASS_NAMES, SEED,
