@@ -4,6 +4,7 @@ Crossover and mutation rates adapt based on population fitness diversity.
 """
 import random
 import numpy as np
+from tqdm import tqdm
 try:
     from deap import base, creator, tools
 except ModuleNotFoundError as e:
@@ -163,10 +164,13 @@ class AdaptiveGA:
         cx_rate = self.cx_prob_init
         mut_rate = self.mut_prob_init
 
-        for gen in range(self.n_gen):
+        pbar = tqdm(range(self.n_gen), desc="  GA Search", unit="gen", leave=False)
+        for gen in pbar:
             # Adapt rates
             fitnesses = [ind.fitness.values[0] for ind in pop]
             cx_rate, mut_rate = self._adapt_rates(fitnesses)
+            best_f = max(fitnesses)
+            pbar.set_postfix(best=f"{best_f:.4f}", cx=f"{cx_rate:.2f}", mut=f"{mut_rate:.2f}")
 
             # Selection
             offspring = tb.select(pop, len(pop))
@@ -201,11 +205,6 @@ class AdaptiveGA:
             self.history["cx_rate"].append(cx_rate)
             self.history["mut_rate"].append(mut_rate)
             self.history["n_selected"].append(n_sel)
-
-            if (gen + 1) % 10 == 0 or gen == 0:
-                print(f"  Gen {gen+1:3d}/{self.n_gen}: "
-                      f"best={max(fits):.4f}  avg={np.mean(fits):.4f}  "
-                      f"sel={n_sel}  cx={cx_rate:.3f}  mut={mut_rate:.3f}")
 
         # Best individual
         best = tools.selBest(pop, 1)[0]

@@ -3,8 +3,16 @@ Dataset loading, splitting, and augmentation for LC25000 lung dataset.
 """
 import os
 import numpy as np
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+try:
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, ImageDataGenerator
+except (ImportError, ModuleNotFoundError):
+    # Fallback for environments where Keras is separate or TF is broken
+    import keras
+    from keras.preprocessing.image import ImageDataGenerator
+    try:
+        from keras.utils import load_img, img_to_array
+    except ImportError:
+        from keras.preprocessing.image import load_img, img_to_array
 from sklearn.model_selection import train_test_split, StratifiedKFold
 
 from config import CLASS_NAMES, IMG_SIZE, SEED, BATCH_SIZE

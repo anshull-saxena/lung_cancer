@@ -22,6 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+from tqdm import tqdm
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
     roc_auc_score, matthews_corrcoef, roc_curve, auc,
@@ -128,7 +129,7 @@ def run_prof_request():
     print("  Exp A: Feature Number vs. Accuracy")
     PENALTIES = [0.0, 0.001, 0.005, 0.01, 0.02]
     feat_results = []
-    for i, p in enumerate(PENALTIES):
+    for i, p in enumerate(tqdm(PENALTIES, desc="  Exp A (Features)")):
         ga = AdaptiveGA(n_features=feat_dim, l0_penalty=p, seed=SEED + i)
         sel_idx, _ = ga.run(F_trval, y_trval)
         clf = KNeighborsClassifier(n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1)
@@ -144,7 +145,7 @@ def run_prof_request():
     print("  Exp B: Generations vs. Accuracy")
     GENS = [20, 50, 100, 150]
     gen_accs = []
-    for i, g in enumerate(GENS):
+    for i, g in enumerate(tqdm(GENS, desc="  Exp B (Generations)")):
         ga = AdaptiveGA(n_features=feat_dim, n_gen=g, seed=SEED + i*7)
         sel_idx, _ = ga.run(F_trval, y_trval)
         clf = KNeighborsClassifier(n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1)
@@ -157,7 +158,7 @@ def run_prof_request():
     print("  Exp C: Mutation vs. Accuracy")
     MUTS = [0.01, 0.05, 0.1, 0.15, 0.2]
     mut_accs = []
-    for i, m in enumerate(MUTS):
+    for i, m in enumerate(tqdm(MUTS, desc="  Exp C (Mutation)")):
         ga = AdaptiveGA(n_features=feat_dim, mut_prob=m, seed=SEED + i*11)
         sel_idx, _ = ga.run(F_trval, y_trval)
         clf = KNeighborsClassifier(n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1)
@@ -170,7 +171,7 @@ def run_prof_request():
     print("  Exp D: Crossover vs. Accuracy")
     CXS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
     cx_accs = []
-    for i, c in enumerate(CXS):
+    for i, c in enumerate(tqdm(CXS, desc="  Exp D (Crossover)")):
         ga = AdaptiveGA(n_features=feat_dim, cx_prob=c, seed=SEED + i*13)
         sel_idx, _ = ga.run(F_trval, y_trval)
         clf = KNeighborsClassifier(n_neighbors=KNN_K, weights=KNN_WEIGHTS, n_jobs=-1)
@@ -234,8 +235,8 @@ def run_prof_request():
     print("\n[4] Attention Module Comparison...")
     ATTNS = ["se", "eca", "cbam", "split", "dual", "vit", "swin"]
     attn_results = []
-    for attn in ATTNS:
-        print(f"  Processing {attn.upper()}...")
+    for attn in tqdm(ATTNS, desc="  Attention Comparison"):
+        print(f"\n    Processing {attn.upper()}...")
         m_extractor, _ = build_feature_extractor("densenet121", attn)
         # Assuming cache exists for user's convenience
         f_trval_attn = extract_features_from_paths_cached(m_extractor, X_trval_paths, f"t5_{attn}_trainval")

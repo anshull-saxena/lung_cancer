@@ -4,6 +4,7 @@ CNN backbone feature extractors with pluggable attention mechanisms.
 import os
 import numpy as np
 import tensorflow as tf
+from tqdm import tqdm
 from tensorflow.keras import layers, Model
 from tensorflow.keras.applications import DenseNet121, ResNet50, VGG16, EfficientNetB0
 from tensorflow.keras.applications.densenet import preprocess_input as pre_densenet
@@ -83,15 +84,14 @@ def extract_features(model, X, batch_size=16):
     """
     n = len(X)
     feats = []
-    for start in range(0, n, batch_size):
+    pbar = tqdm(range(0, n, batch_size), desc="  Extracting", unit="batch", leave=False)
+    for start in pbar:
         end = min(start + batch_size, n)
         batch = X[start:end]
         if batch.dtype != np.float32:
             batch = batch.astype(np.float32, copy=False)
         pred = model.predict(batch, verbose=0)
         feats.append(pred)
-        if (start // batch_size + 1) % 50 == 0:
-            print(f"  Extracted {end}/{n} ...")
     return np.vstack(feats)
 
 
@@ -112,7 +112,8 @@ def extract_features_from_paths(model, paths, img_size=IMG_SIZE, batch_size=16):
     paths = list(paths)
     n = len(paths)
     feats = []
-    for start in range(0, n, batch_size):
+    pbar = tqdm(range(0, n, batch_size), desc="  Extracting", unit="batch", leave=False)
+    for start in pbar:
         end = min(start + batch_size, n)
         batch_paths = paths[start:end]
         batch_imgs = []
@@ -126,8 +127,6 @@ def extract_features_from_paths(model, paths, img_size=IMG_SIZE, batch_size=16):
         batch = np.asarray(batch_imgs, dtype=np.float32)
         pred = model.predict(batch, verbose=0)
         feats.append(pred)
-        if (start // batch_size + 1) % 50 == 0:
-            print(f"  Extracted {end}/{n} ...")
     return np.vstack(feats)
 
 
