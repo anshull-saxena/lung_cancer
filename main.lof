@@ -1,0 +1,6 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Architecture diagram of the proposed methodology showing parallel CNN feature extraction, NSGA-II selection, and ensemble classification streams.}}{3}{figure.caption.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Confusion Matrix (GP3 Fusion, $\tau =0.9$)}}{6}{figure.caption.5}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Multi-class ROC Curve}}{6}{figure.caption.5}%
+\contentsline {figure}{\numberline {4}{\ignorespaces NSGA-II convergence analysis including accuracy progression and hypervolume evolution.}}{7}{figure.caption.9}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Crossover vs. Accuracy}}{7}{figure.caption.10}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Mutation vs. Accuracy}}{7}{figure.caption.10}%

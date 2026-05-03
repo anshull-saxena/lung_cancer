@@ -1,0 +1,6 @@
+\contentsline {table}{\numberline {1}{\ignorespaces Individual classifier performance on the test set using NSGA-II selected features (169 out of 6400).}}{5}{table.caption.2}%
+\contentsline {table}{\numberline {2}{\ignorespaces Comparison of ensemble strategies.}}{5}{table.caption.3}%
+\contentsline {table}{\numberline {3}{\ignorespaces Effect of threshold values on grouping operators.}}{5}{table.caption.4}%
+\contentsline {table}{\numberline {4}{\ignorespaces Effect of number of generations on performance.}}{6}{table.caption.6}%
+\contentsline {table}{\numberline {5}{\ignorespaces Effect of crossover value on accuracy.}}{6}{table.caption.7}%
+\contentsline {table}{\numberline {6}{\ignorespaces Comparison with state-of-the-art methods.}}{7}{table.caption.8}%

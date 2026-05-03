@@ -1,0 +1,25 @@
+\contentsline {section}{Certificate}{i}{Doc-Start}%
+\contentsline {section}{Acknowledgement}{ii}{Doc-Start}%
+\contentsline {section}{Abstract}{iii}{Doc-Start}%
+\contentsline {section}{List of Figures}{v}{Doc-Start}%
+\contentsline {section}{List of Tables}{vi}{Doc-Start}%
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Literature Review / Background}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Deep Learning for Lung Histopathology}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Attention Mechanisms in Medical Imaging}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Evolutionary Feature Selection}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Ensemble Classification and Aggregation}{2}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Methodology}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Dataset and Preprocessing}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Multi-CNN Architecture with Channel Attention}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}NSGA-II Multi-Objective Feature Selection}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Implementation}{4}{section.4}%
+\contentsline {section}{\numberline {5}Results and Analysis}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Classification Performance}{5}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Threshold Sensitivity Analysis}{5}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Feature Selection Analysis}{5}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Parameter Sensitivity Analysis}{6}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}SOTA Comparison}{6}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}NSGA-II Convergence and Parameters}{7}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Discussion}{8}{section.6}%
+\contentsline {section}{\numberline {7}Conclusion}{9}{section.7}%

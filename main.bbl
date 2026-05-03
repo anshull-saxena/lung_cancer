@@ -1,0 +1,94 @@
+\begin{thebibliography}{10}
+
+\bibitem{who2024cancer}
+F.~Bray, M.~Laversanne, H.~Sung, J.~Ferlay, R.~L. Siegel, I.~Soerjomataram, and
+  A.~Jemal, ``Global cancer statistics 2022: {GLOBOCAN} estimates of incidence
+  and mortality worldwide for 36 cancers in 185 countries,'' {\em CA: A Cancer
+  Journal for Clinicians}, vol.~74, no.~3, pp.~229--263, 2024.
+
+\bibitem{travis2015who}
+W.~D. Travis, E.~Brambilla, A.~P. Burke, A.~Marx, and A.~G. Nicholson, {\em
+  {WHO} Classification of Tumours of the Lung, Pleura, Thymus and Heart}.
+\newblock IARC Press, 4th~ed., 2015.
+
+\bibitem{robbins2023pathology}
+V.~Kumar, A.~K. Abbas, and J.~C. Aster, {\em Robbins and Cotran Pathologic
+  Basis of Disease}.
+\newblock Elsevier, 10th~ed., 2023.
+
+\bibitem{litjens2017survey}
+G.~Litjens, T.~Kooi, B.~E. Bejnordi, A.~A.~A. Setio, F.~Ciompi, M.~Ghafoorian,
+  J.~A. Van Der~Laak, B.~Van~Ginneken, and C.~I. S{\'a}nchez, ``A survey on
+  deep learning in medical image analysis,'' {\em Medical Image Analysis},
+  vol.~42, pp.~60--88, 2017.
+
+\bibitem{huang2017densely}
+G.~Huang, Z.~Liu, L.~Van Der~Maaten, and K.~Q. Weinberger, ``Densely connected
+  convolutional networks,'' in {\em Proceedings of the IEEE Conference on
+  Computer Vision and Pattern Recognition}, pp.~4700--4708, 2017.
+
+\bibitem{he2016deep}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun, ``Deep residual learning for image
+  recognition,'' in {\em Proceedings of the IEEE Conference on Computer Vision
+  and Pattern Recognition}, pp.~770--778, 2016.
+
+\bibitem{tan2019efficientnet}
+M.~Tan and Q.~Le, ``{EfficientNet}: Rethinking model scaling for convolutional
+  neural networks,'' in {\em International Conference on Machine Learning},
+  pp.~6105--6114, PMLR, 2019.
+
+\bibitem{deb2002fast}
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan, ``A fast and elitist
+  multiobjective genetic algorithm: {NSGA-II},'' {\em IEEE Transactions on
+  Evolutionary Computation}, vol.~6, no.~2, pp.~182--197, 2002.
+
+\bibitem{beliakov2007aggregation}
+G.~Beliakov, A.~Pradera, and T.~Calvo, {\em Aggregation Functions: A Guide for
+  Practitioners}.
+\newblock Springer, 2007.
+
+\bibitem{borkowski2019lung}
+A.~A. Borkowski, M.~M. Bui, L.~B. Thomas, C.~P. Wilson, L.~A. DeLand, and S.~M.
+  Mastorides, ``Lung and colon cancer histopathological image dataset
+  ({LC25000}),'' {\em arXiv preprint arXiv:1912.12142}, 2019.
+
+\bibitem{mangal2020convolution}
+S.~Mangal, A.~Chaurasia, and A.~Kharadiya, ``Convolution neural networks for
+  diagnosing colon and lung cancer histopathological images,'' {\em arXiv
+  preprint arXiv:2009.03878}, 2020.
+
+\bibitem{masud2021machine}
+M.~Masud, N.~Sikder, A.-A. Nahid, A.~K. Bairagi, and M.~A. AlZain, ``A machine
+  learning approach to diagnosing lung and colon cancer using a deep
+  learning-based classification framework,'' {\em Sensors}, vol.~21, no.~3,
+  p.~748, 2021.
+
+\bibitem{nishio2021lung}
+M.~Nishio, M.~Nishio, N.~Jimbo, and K.~Nakane, ``Lung cancer histology
+  classification from {CT} images based on radiomics and deep learning
+  models,'' {\em Scientific Reports}, vol.~11, no.~1, pp.~1--12, 2021.
+
+\bibitem{talukder2022machine}
+M.~A. Talukder, M.~M. Islam, M.~A. Uddin, A.~Akhter, K.~M. Hasan, and M.~A.
+  Moni, ``Machine learning-based lung and colon cancer detection using deep
+  feature extraction and ensemble learning,'' {\em Expert Systems with
+  Applications}, vol.~205, p.~117695, 2022.
+
+\bibitem{hu2018squeeze}
+J.~Hu, L.~Shen, and G.~Sun, ``Squeeze-and-excitation networks,'' in {\em
+  Proceedings of the IEEE Conference on Computer Vision and Pattern
+  Recognition}, pp.~7132--7141, 2018.
+
+\bibitem{wang2020eca}
+Q.~Wang, B.~Wu, P.~Zhu, P.~Li, W.~Zuo, and Q.~Hu, ``{ECA-Net}: Efficient
+  channel attention for deep convolutional neural networks,'' {\em Proceedings
+  of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pp.~11534--11542, 2020.
+
+\bibitem{roy2025grouping}
+P.~Roy, A.~Chakraborty, R.~Rana, S.~Mohan, and S.~Hait, ``A grouping-based
+  approach with channel attention-enhanced feature selection using
+  multi-classifier and ensemble fusion for lung histopathological image
+  classification,'' {\em Scientific Reports}, vol.~15, p.~8370, 2025.
+
+\end{thebibliography}
